@@ -3,7 +3,7 @@
 namespace Queens.Models
 {
     [Serializable]
-    public class Card 
+    public class CardModel
     {
         public int id { get; set; }
         public string name{ get; set; }

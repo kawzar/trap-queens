@@ -6,14 +6,13 @@ using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 
 public class CardCreator : EditorWindow
 {
     private MultiColumnListView cardGrid;
     private Button importButton, exportJson;
     private TextField csvTextField;
-    private List<Card> items;
+    private List<CardModel> items;
     
     [MenuItem("Kawzar/Tools/CardCreator")]
     public static void ShowExample()

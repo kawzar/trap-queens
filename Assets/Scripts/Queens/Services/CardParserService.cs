@@ -5,18 +5,17 @@ using Newtonsoft.Json;
 using Queens.Models;
 using TinyCsvParser;
 using TinyCsvParser.Mapping;
-using UnityEngine;
 
 namespace Queens.Services
 {
     public static class CardParserService
     {
-        public static List<Card> ParseCsv(string csv)
+        public static List<CardModel> ParseCsv(string csv)
         {
             CsvReaderOptions options = new CsvReaderOptions(new[] { Environment.NewLine });
             CsvParserOptions parserOptions = new CsvParserOptions(true, ',');
             CsvCardMapping csvMapper = new CsvCardMapping();
-            CsvParser<Card> csvParser = new CsvParser<Card>(parserOptions, csvMapper);
+            CsvParser<CardModel> csvParser = new CsvParser<CardModel>(parserOptions, csvMapper);
 
             var result = csvParser.ReadFromString(options, csv)
                 .Select(x => x.Result)
@@ -24,9 +23,14 @@ namespace Queens.Services
 
             return result;
         }
+
+        public static List<CardModel> ParseJson(string json)
+        {
+            return JsonConvert.DeserializeObject<List<CardModel>>(json);
+        }
     }
     
-    public class CsvCardMapping : CsvMapping<Card>
+    public class CsvCardMapping : CsvMapping<CardModel>
     {
         public CsvCardMapping() : base()
         {
