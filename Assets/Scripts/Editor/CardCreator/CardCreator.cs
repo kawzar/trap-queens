@@ -1,4 +1,8 @@
-﻿using Queens.Services;
+﻿using System.Collections.Generic;
+using System.IO;
+using Queens.Models;
+using Queens.Services;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,8 +11,9 @@ using UnityEditor.UIElements;
 public class CardCreator : EditorWindow
 {
     private MultiColumnListView cardGrid;
-    private Button importButton;
+    private Button importButton, exportJson;
     private TextField csvTextField;
+    private List<Card> items;
     
     [MenuItem("Kawzar/Tools/CardCreator")]
     public static void ShowExample()
@@ -28,17 +33,25 @@ public class CardCreator : EditorWindow
         root.Add(labelFromUXML);
 
        importButton = root.Q<Button>("import-button");
+       exportJson = root.Q<Button>("export-json");
        csvTextField = root.Q<TextField>("csv-input");
-       cardGrid = root.Q<MultiColumnListView>(); 
+       cardGrid = root.Q<MultiColumnListView>();
 
+       exportJson.clicked += () =>
+       {
+           if (items.Count > 0)
+           {
+               var json = JsonConvert.SerializeObject(items);
+               using var streamWriter = new StreamWriter(Application.streamingAssetsPath + "/Cards/cards.json");
+               streamWriter.Write(json);
+           }
+       };
+       
        importButton.clicked += () =>
        {
-           var items = CardParserService.ParseCsv(csvTextField.value);
-           const int itemHeight = 16;
+           items = CardParserService.ParseCsv(csvTextField.value);
            cardGrid.itemsSource = items;
 
-           // For each column, set Column.makeCell to initialize each cell in the column.
-           // You can index the columns array with names or numerical indices.
            cardGrid.columns["id"].makeCell = () => new Label();
            cardGrid.columns["name"].makeCell = () => new Label();
            cardGrid.columns["bearer"].makeCell = () => new Label();

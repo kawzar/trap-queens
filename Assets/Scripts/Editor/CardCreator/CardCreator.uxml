@@ -4,25 +4,30 @@
             <ui:TextField label="Paste CSV" text="filler text" name="csv-input" multiline="true" style="flex-grow: 1;" />
             <ui:Button text="Import" display-tooltip-when-elided="true" name="import-button" style="flex-grow: 1;" />
         </ui:VisualElement>
-        <ui:MultiColumnListView fixed-item-height="20">
-            <ui:Columns>
-                <ui:Column name="id" title="id" width="80" />
-                <ui:Column name="name" title="name" width="80" />
-                <ui:Column name="bearer" title="bearer" width="80" />
-                <ui:Column name="collection" title="collection" width="80" />
-                <ui:Column name="level_lock" title="level_lock" width="80" />
-                <ui:Column name="dialog" title="dialog" width="80" />
-                <ui:Column name="yes_answer" title="yes_answer" width="80" />
-                <ui:Column name="no_answer" title="no_answer" width="80" />
-                <ui:Column name="yes_flow" title="yes_flow" width="80" />
-                <ui:Column name="yes_money" title="yes_money" width="80" />
-                <ui:Column name="yes_health" title="yes_health" width="80" />
-                <ui:Column name="yes_popularity" title="yes_popularity" width="80" />
-                <ui:Column name="no_flow" title="no_flow" width="80" />
-                <ui:Column name="no_money" title="no_money" width="80" />
-                <ui:Column name="no_health" title="no_health" width="80" />
-                <ui:Column name="no_popularity" title="no_popularity" width="80" />
-            </ui:Columns>
-        </ui:MultiColumnListView>
+        <ui:ScrollView style="flex-grow: 1;">
+            <ui:MultiColumnListView fixed-item-height="20">
+                <ui:Columns>
+                    <ui:Column name="id" title="id" width="80" />
+                    <ui:Column name="name" title="name" width="80" />
+                    <ui:Column name="bearer" title="bearer" width="80" />
+                    <ui:Column name="collection" title="collection" width="80" />
+                    <ui:Column name="level_lock" title="level_lock" width="80" />
+                    <ui:Column name="dialog" title="dialog" width="80" />
+                    <ui:Column name="yes_answer" title="yes_answer" width="80" />
+                    <ui:Column name="no_answer" title="no_answer" width="80" />
+                    <ui:Column name="yes_flow" title="yes_flow" width="80" />
+                    <ui:Column name="yes_money" title="yes_money" width="80" />
+                    <ui:Column name="yes_health" title="yes_health" width="80" />
+                    <ui:Column name="yes_popularity" title="yes_popularity" width="80" />
+                    <ui:Column name="no_flow" title="no_flow" width="80" />
+                    <ui:Column name="no_money" title="no_money" width="80" />
+                    <ui:Column name="no_health" title="no_health" width="80" />
+                    <ui:Column name="no_popularity" title="no_popularity" width="80" />
+                </ui:Columns>
+            </ui:MultiColumnListView>
+        </ui:ScrollView>
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Button text="Export JSON" display-tooltip-when-elided="true" name="export-json" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

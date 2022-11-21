@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Queens.Models;
 using TinyCsvParser;
 using TinyCsvParser.Mapping;
@@ -21,13 +22,6 @@ namespace Queens.Services
                 .Select(x => x.Result)
                 .ToList();
 
-            return result;
-        }
-        
-        public static List<Card> ParseJson(string json)
-        {
-            List<Card> result = new List<Card>();
-            result = JsonUtility.FromJson<List<Card>>(json);
             return result;
         }
     }
