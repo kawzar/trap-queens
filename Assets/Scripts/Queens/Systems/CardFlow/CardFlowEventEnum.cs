@@ -4,17 +4,17 @@ namespace Queens.Systems.CardFlow
 {
     public enum CardFlowEventEnum
     {
-        DRAW, 
         YES,
         NO
     }
 
     public class CardFlowEventArgs
     {
+        public int CardId { get; set; }
         public CardFlowEventEnum EventType { get; set; }
-        public float FlowDelta { get; set; }
-        public float MoneyDelta { get; set; }
-        public float PopularityDelta { get; set; }
-        public float HealthDelta { get; set; }
+        public int FlowDelta { get; set; }
+        public int MoneyDelta { get; set; }
+        public int PopularityDelta { get; set; }
+        public int HealthDelta { get; set; }
     }
 }
