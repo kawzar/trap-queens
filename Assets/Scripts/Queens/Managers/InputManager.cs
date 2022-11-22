@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private Camera camera;
+    [SerializeField] private Camera _camera;
     private QueensInputActions queensInputActions;
     
     public static InputManager Instance { get; set; }
@@ -16,6 +15,10 @@ public class InputManager : MonoBehaviour
     public delegate void EndTouch(Vector2 position, float time);
 
     public event EndTouch OnEndTouch;
+    
+    public delegate void PerformedTouch(Vector2 position, float time);
+
+    public event PerformedTouch OnPerformedTouch;
 
     private void Awake()
     {
@@ -41,14 +44,16 @@ public class InputManager : MonoBehaviour
     {
         queensInputActions.Gameplay.PrimaryContact.started += ctx => OnPrimaryContactStarted(ctx);
         queensInputActions.Gameplay.PrimaryContact.canceled += ctx => OnPrimaryContactEnded(ctx);
+        queensInputActions.Gameplay.PrimaryContact.performed += ctx => OnPrimaryContactPerformed(ctx);
     }
 
     private void OnPrimaryContactStarted(InputAction.CallbackContext ctx)
     {
         if (OnStartTouch != null)
         {
-            Vector2 position = queensInputActions.Gameplay.PrimaryPosition.ReadValue<Vector2>();
-            OnStartTouch(camera.ScreenToWorldPoint(position), (float)ctx.startTime);
+            Vector3 position = queensInputActions.Gameplay.PrimaryPosition.ReadValue<Vector2>();
+            position.z = _camera.nearClipPlane;
+            OnStartTouch(_camera.ScreenToWorldPoint(position), (float)ctx.startTime);
         }
     }
     
@@ -57,16 +62,26 @@ public class InputManager : MonoBehaviour
         if (OnEndTouch != null)
         {
             Vector3 position = queensInputActions.Gameplay.PrimaryPosition.ReadValue<Vector2>();
-            position.z = camera.nearClipPlane;
-            OnEndTouch(camera.ScreenToWorldPoint(position), (float)ctx.time);
+            position.z = _camera.nearClipPlane;
+            OnEndTouch(_camera.ScreenToWorldPoint(position), (float)ctx.time);
+        }
+    }
+    
+    private void OnPrimaryContactPerformed(InputAction.CallbackContext ctx)
+    {
+        if (OnPerformedTouch != null)
+        {
+            Vector3 position = queensInputActions.Gameplay.PrimaryPosition.ReadValue<Vector2>();
+            position.z = _camera.nearClipPlane;
+            OnPerformedTouch(_camera.ScreenToWorldPoint(position), (float)ctx.time);
         }
     }
 
     public Vector2 GetPrimaryPosition()
     { 
         Vector3 position = queensInputActions.Gameplay.PrimaryPosition.ReadValue<Vector2>();
-        position.z = camera.nearClipPlane;
-        return camera.ScreenToWorldPoint(position);
+        position.z = _camera.nearClipPlane;
+        return _camera.ScreenToWorldPoint(position);
     }
     
 }

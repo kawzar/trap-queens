@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using Queens.Managers;
 using Queens.Systems.CardFlow;
@@ -10,11 +11,12 @@ public class CardView : MonoBehaviour
 {
    [SerializeField] private Image image;
    [SerializeField] private TextMeshProUGUI overlayText;
+   [SerializeField] private CanvasGroup overlayTextCanvasGroup;
    [SerializeField] private TextMeshProUGUI dialogText;
-   [SerializeField] private float animationRotationModule = 3.75f;
-   [SerializeField] private float animationScale = 1.5f;
    [SerializeField] private float spawnAnimationEndValue = 255f;
    [SerializeField] private float spawnAnimationDuration = 1.25f;
+   [SerializeField] private float swipeThreshold = 50f;
+   [SerializeField] private float swipeVelocity = 15f;
 
    private Vector3 _initialScale;
 
@@ -22,19 +24,52 @@ public class CardView : MonoBehaviour
 
    private CardFlowEvent _swipeLeft;
    private CardFlowEvent _swipeRight;
+   private bool _isDragging;
 
    private void OnEnable()
    {
-      transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration)
-         .SetEase(Ease.InBounce);
-      SwipeDetectionManager.Instance.SwipeLeft += OnSwipeLeft;
-      SwipeDetectionManager.Instance.SwipeRight += OnSwipeRight;
+      transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration);
+      InputManager.Instance.OnStartTouch += OnStartedTouch;
+      InputManager.Instance.OnEndTouch += OnReleasedFinger;
+   }
+
+   private void OnStartedTouch(Vector2 position, float time)
+   {
+      _isDragging = true;
+   }
+
+   private void OnReleasedFinger(Vector2 position, float time)
+   {
+      _isDragging = false;
+      HideOverlayText();
+
+      if (transform.localPosition.x >= swipeThreshold)
+      {
+         OnSwipeRight();
+      }
+      else if (transform.localPosition.x <= -swipeThreshold)
+      {
+         OnSwipeLeft();
+      }
+      else
+      {
+         transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
+      }
+   }
+
+   private void Update()
+   {
+      if (_isDragging)
+      {
+         var fingerPosition = InputManager.Instance.GetPrimaryPosition();
+         transform.localPosition = new Vector3(fingerPosition.x * swipeVelocity, transform.localPosition.y, transform.localPosition.z);
+      }
    }
 
    public void Bind(CardViewModel viewModel)
    {
       _viewModel = viewModel;
-     RebindValues();
+      RebindValues();
    }
 
    private void RebindValues()
@@ -44,27 +79,44 @@ public class CardView : MonoBehaviour
       _swipeRight = new CardFlowEvent(_viewModel.YesAnswerArgs);
    }
 
- private void OnSwipeRight()
+   private void OnSwipeRight()
    {
-      transform.DOMoveX(Screen.safeArea.xMax, 0.25f)
-         .OnComplete(() =>
-         {
-            _swipeRight.Raise();
-            SwipeDetectionManager.Instance.SwipeLeft -= OnSwipeLeft;
-            SwipeDetectionManager.Instance.SwipeRight -= OnSwipeRight;
-            Destroy(gameObject);
-         });
+      _swipeRight.Raise();
+      UnsuscribeEvents();
+      Destroy(gameObject);
    }
 
    private void OnSwipeLeft()
    {
-      transform.DOMoveX(Screen.safeArea.xMin, 0.25f)
-         .OnComplete(() =>
-         {
-            _swipeLeft.Raise();
-            SwipeDetectionManager.Instance.SwipeLeft -= OnSwipeLeft;
-            SwipeDetectionManager.Instance.SwipeRight -= OnSwipeRight;
-            Destroy(gameObject);
-         });
+      _swipeLeft.Raise();
+      UnsuscribeEvents();
+      Destroy(gameObject);
+   }
+
+   private void UnsuscribeEvents()
+   {
+      InputManager.Instance.OnStartTouch -= OnStartedTouch;
+      InputManager.Instance.OnEndTouch -= OnReleasedFinger;   }
+
+   private void OnPeekRight()
+   {
+      overlayText.SetText(_viewModel.Yes_answer);
+      ShowOverlayText();
+   }
+
+   private void OnPeekLeft()
+   {
+      overlayText.SetText(_viewModel.No_answer);
+      ShowOverlayText();
+   }
+
+   private void ShowOverlayText()
+   {
+      overlayTextCanvasGroup.alpha = 1;
+   }
+
+   private void HideOverlayText()
+   {
+      overlayText.alpha = 0;
    }
 }
