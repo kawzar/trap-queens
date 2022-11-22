@@ -1,18 +1,12 @@
-using System;
 using DG.Tweening;
-using Queens.Managers;
 using Queens.Systems.CardFlow;
 using Queens.ViewModels;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CardView : MonoBehaviour
 {
    [SerializeField] private Image image;
-   [SerializeField] private TextMeshProUGUI overlayText;
-   [SerializeField] private CanvasGroup overlayTextCanvasGroup;
-   [SerializeField] private TextMeshProUGUI dialogText;
    [SerializeField] private float spawnAnimationEndValue = 255f;
    [SerializeField] private float spawnAnimationDuration = 1.25f;
    [SerializeField] private float swipeThreshold = 50f;
@@ -41,7 +35,6 @@ public class CardView : MonoBehaviour
    private void OnReleasedFinger(Vector2 position, float time)
    {
       _isDragging = false;
-      HideOverlayText();
 
       if (transform.localPosition.x >= swipeThreshold)
       {
@@ -74,7 +67,6 @@ public class CardView : MonoBehaviour
 
    private void RebindValues()
    {
-      dialogText.SetText(_viewModel.Dialog);
       _swipeLeft = new CardFlowEvent(_viewModel.NoAnswerArgs);
       _swipeRight = new CardFlowEvent(_viewModel.YesAnswerArgs);
    }
@@ -96,27 +88,6 @@ public class CardView : MonoBehaviour
    private void UnsuscribeEvents()
    {
       InputManager.Instance.OnStartTouch -= OnStartedTouch;
-      InputManager.Instance.OnEndTouch -= OnReleasedFinger;   }
-
-   private void OnPeekRight()
-   {
-      overlayText.SetText(_viewModel.Yes_answer);
-      ShowOverlayText();
-   }
-
-   private void OnPeekLeft()
-   {
-      overlayText.SetText(_viewModel.No_answer);
-      ShowOverlayText();
-   }
-
-   private void ShowOverlayText()
-   {
-      overlayTextCanvasGroup.alpha = 1;
-   }
-
-   private void HideOverlayText()
-   {
-      overlayText.alpha = 0;
+      InputManager.Instance.OnEndTouch -= OnReleasedFinger;
    }
 }

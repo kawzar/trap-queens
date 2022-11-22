@@ -12,9 +12,7 @@
                     <ui:Column name="bearer" title="bearer" width="80" />
                     <ui:Column name="collection" title="collection" width="80" />
                     <ui:Column name="level_lock" title="level_lock" width="80" />
-                    <ui:Column name="dialog" title="dialog" width="80" />
-                    <ui:Column name="yes_answer" title="yes_answer" width="80" />
-                    <ui:Column name="no_answer" title="no_answer" width="80" />
+                    <ui:Column name="dialog" title="dialog" width="120" />
                     <ui:Column name="yes_flow" title="yes_flow" width="80" />
                     <ui:Column name="yes_money" title="yes_money" width="80" />
                     <ui:Column name="yes_health" title="yes_health" width="80" />

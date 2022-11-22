@@ -40,16 +40,14 @@ namespace Queens.Services
             MapProperty(3, x => x.name);
             MapProperty(4, x => x.level_lock);
             MapProperty(5, x => x.dialog);
-            MapProperty(6, x => x.yes_answer);
-            MapProperty(7, x => x.no_answer);
-            MapProperty(8, x => x.yes_flow);
-            MapProperty(9, x => x.yes_popularity);
-            MapProperty(10, x => x.yes_money);
-            MapProperty(11, x => x.yes_health);
-            MapProperty(12, x => x.no_flow);
-            MapProperty(13, x => x.no_popularity);
-            MapProperty(14, x => x.no_money);
-            MapProperty(15, x => x.no_health);
+            MapProperty(6, x => x.yes_flow);
+            MapProperty(7, x => x.yes_popularity);
+            MapProperty(8, x => x.yes_money);
+            MapProperty(9, x => x.yes_health);
+            MapProperty(10, x => x.no_flow);
+            MapProperty(11, x => x.no_popularity);
+            MapProperty(12, x => x.no_money);
+            MapProperty(13, x => x.no_health);
         }
     }
 }

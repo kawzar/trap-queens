@@ -10,8 +10,6 @@ namespace Queens.Models
         public string bearer{ get; set; }
         public string collection{ get; set; }
         public string dialog{ get; set; }
-        public string yes_answer{ get; set; }
-        public string no_answer{ get; set; }
         public int? yes_flow{ get; set; }
         public int? yes_popularity{ get; set; }
         public int? yes_money{ get; set; }

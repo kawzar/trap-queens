@@ -57,8 +57,6 @@ public class CardCreator : EditorWindow
            cardGrid.columns["collection"].makeCell = () => new Label();
            cardGrid.columns["level_lock"].makeCell = () => new Label();
            cardGrid.columns["dialog"].makeCell = () => new Label();
-           cardGrid.columns["yes_answer"].makeCell = () => new Label();
-           cardGrid.columns["no_answer"].makeCell = () => new Label();
            cardGrid.columns["yes_flow"].makeCell = () => new Label();
            cardGrid.columns["yes_money"].makeCell = () => new Label();
            cardGrid.columns["yes_health"].makeCell = () => new Label();
@@ -80,10 +78,6 @@ public class CardCreator : EditorWindow
                (element as Label).text = items[index].level_lock.ToString();
            cardGrid.columns["dialog"].bindCell = (VisualElement element, int index) =>
                (element as Label).text = items[index].dialog;
-            cardGrid.columns["yes_answer"].bindCell = (VisualElement element, int index) =>
-               (element as Label).text = items[index].yes_answer;
-            cardGrid.columns["no_answer"].bindCell = (VisualElement element, int index) =>
-                (element as Label).text = items[index].no_answer;
             cardGrid.columns["yes_flow"].bindCell = (VisualElement element, int index) =>
                 (element as Label).text = items[index].yes_flow.ToString();
             cardGrid.columns["yes_money"].bindCell = (VisualElement element, int index) =>

@@ -10,8 +10,6 @@ namespace Queens.ViewModels
         public string Bearer { get; set; }
         public string Collection{ get; set; }
         public string Dialog{ get; set; }
-        public string Yes_answer{ get; set; }
-        public string No_answer{ get; set; }
         
         public int? level_lock{ get; set; }
 
@@ -26,8 +24,6 @@ namespace Queens.ViewModels
             Id = card.id;
             level_lock = card.level_lock;
             Name = card.name;
-            No_answer = card.no_answer;
-            Yes_answer = card.yes_answer;
             NoAnswerArgs = new CardFlowEventArgs
             {
                 CardId = Id,
