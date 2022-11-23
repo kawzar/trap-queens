@@ -2191,7 +2191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardFlowSystem: {fileID: 11400000, guid: f7d7f020b8d5d3a4cb3af49aeb7c7ad1, type: 2}
   _cardPrefab: {fileID: 8456647362154020220, guid: 9971e5b338c6025419328442e6694ea3, type: 3}
-  _cards: {fileID: 4900000, guid: 9b6bb8d5b031b1f4492029ab61e4997f, type: 3}
+  _cards: {fileID: 4900000, guid: 09df63bcf4a1e8146aab8a0e6dcddfc5, type: 3}
   _stats: {fileID: 1848178977}
   _dialogText: {fileID: 674235103}
 --- !u!114 &1938504129
