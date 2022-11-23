@@ -18,6 +18,7 @@ public class CardView : MonoBehaviour
 
    private CardFlowEvent _swipeLeft;
    private CardFlowEvent _swipeRight;
+   private CardFlowEvent _onDraw;
    private bool _isDragging;
 
    private void OnEnable()
@@ -84,7 +85,7 @@ public class CardView : MonoBehaviour
       UnsuscribeEvents();
       Destroy(gameObject);
    }
-
+   
    private void UnsuscribeEvents()
    {
       InputManager.Instance.OnStartTouch -= OnStartedTouch;

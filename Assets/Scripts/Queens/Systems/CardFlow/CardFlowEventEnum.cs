@@ -1,11 +1,10 @@
-﻿using Queens.Models;
-
-namespace Queens.Systems.CardFlow
+﻿namespace Queens.Systems.CardFlow
 {
     public enum CardFlowEventEnum
     {
         YES,
-        NO
+        NO,
+        DRAW
     }
 
     public class CardFlowEventArgs
@@ -16,5 +15,7 @@ namespace Queens.Systems.CardFlow
         public int MoneyDelta { get; set; }
         public int PopularityDelta { get; set; }
         public int HealthDelta { get; set; }
+        
+        public string CardText { get; set; }
     }
 }

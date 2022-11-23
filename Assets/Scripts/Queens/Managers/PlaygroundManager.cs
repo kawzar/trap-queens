@@ -3,6 +3,7 @@ using Queens.Services;
 using Queens.Systems.CardFlow;
 using Queens.ViewModels;
 using Queens.Views;
+using TMPro;
 using UnityEngine;
 
 namespace Queens.Managers
@@ -13,6 +14,7 @@ namespace Queens.Managers
         [SerializeField] private CardView _cardPrefab;
         [SerializeField] private TextAsset _cards;
         [SerializeField] private StatsView _stats;
+        [SerializeField] private TextMeshProUGUI _dialogText;
         
         private CardProviderService _cardProviderService;
         
@@ -27,6 +29,7 @@ namespace Queens.Managers
         {
             StartCoroutine(WaitBeforePolling());
             var card = _cardProviderService.GetNextCard();
+            _dialogText.SetText(card.dialog);
             var instantiated = Instantiate(_cardPrefab, transform);
             instantiated.Bind(new CardViewModel(card));
         }

@@ -15,6 +15,7 @@ namespace Queens.ViewModels
 
         public CardFlowEventArgs YesAnswerArgs;
         public CardFlowEventArgs NoAnswerArgs;
+        public CardFlowEventArgs CardDrawnArgs;
 
         public CardViewModel(CardModel card)
         {
@@ -24,6 +25,7 @@ namespace Queens.ViewModels
             Id = card.id;
             level_lock = card.level_lock;
             Name = card.name;
+            
             NoAnswerArgs = new CardFlowEventArgs
             {
                 CardId = Id,
@@ -41,6 +43,12 @@ namespace Queens.ViewModels
                 MoneyDelta = card.yes_money.HasValue ? card.yes_money.Value : 0,
                 PopularityDelta = card.yes_popularity.HasValue ? card.yes_popularity.Value : 0,
                 HealthDelta = card.yes_health.HasValue ? card.yes_health.Value : 0,
+            };
+            CardDrawnArgs = new CardFlowEventArgs
+            {
+                CardId = Id,
+                EventType = CardFlowEventEnum.DRAW,
+                CardText = Dialog
             };
         }
     }

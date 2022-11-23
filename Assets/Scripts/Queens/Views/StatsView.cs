@@ -33,7 +33,7 @@ namespace Queens.Views
         
         public void OnCardPlayed(CardFlowEventArgs args)
         {
-            if (args == null) return;
+            if (args == null || args.EventType == CardFlowEventEnum.DRAW) return;
             _viewModel.Flow += args.FlowDelta;
             _viewModel.Money += args.MoneyDelta;
             _viewModel.Popularity += args.PopularityDelta;
