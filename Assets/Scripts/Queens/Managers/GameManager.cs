@@ -8,6 +8,7 @@ namespace Queens.Managers
 {
     public class GameManager : MonoBehaviour
     {
+      
         public void OnPlay()
         {
             SceneManager.LoadScene(0);

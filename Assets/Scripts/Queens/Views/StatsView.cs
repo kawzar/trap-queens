@@ -1,4 +1,6 @@
+using Queens.Systems;
 using Queens.Systems.CardFlow;
+using Queens.Systems.Player;
 using Queens.ViewModels;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,9 +16,9 @@ namespace Queens.Views
         [SerializeField] private Slider _popularity;
 
         [SerializeField] private Slider _health;
-
-        private StatsViewModel _viewModel;
         
+        private StatsViewModel _viewModel;
+
         public void Bind(StatsViewModel viewModel)
         {
             _viewModel = viewModel;
@@ -31,13 +33,10 @@ namespace Queens.Views
             _health.value = _viewModel.Health;
         }
         
-        public void OnCardPlayed(CardFlowEventArgs args)
+        public void OnStatsChanged(PlayerFlowEventArgs args)
         {
-            if (args == null || args.EventType == CardFlowEventEnum.DRAW) return;
-            _viewModel.Flow += args.FlowDelta;
-            _viewModel.Money += args.MoneyDelta;
-            _viewModel.Popularity += args.PopularityDelta;
-            _viewModel.Health += args.HealthDelta;
+            if (args == null || args.EventType == PlayerEventEnum.STATS_EFFECT) return;
+            _viewModel = PlayerSystem.Instance.PlayerViewModel.Stats;
             RebindValues();
         }
     }

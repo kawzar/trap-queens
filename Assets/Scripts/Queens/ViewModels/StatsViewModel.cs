@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Queens.Models;
 
 namespace Queens.ViewModels
 {
@@ -8,9 +9,17 @@ namespace Queens.ViewModels
         public int Popularity { get; set; }
         public int Money { get; set; }
         public int Health { get; set; }
-        
-        public int Round { get; set; }
-        
-        public List<string> ActiveCollections { get; set; }
+
+        public StatsViewModel()
+        {
+        }
+
+        public StatsViewModel(Status model)
+        {
+            Flow = model.flow;
+            Popularity = model.popularity;
+            Money = model.money;
+            Health = model.health;
+        }
     }
 }

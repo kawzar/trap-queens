@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Queens.Systems;
 using Queens.Systems.CardFlow;
 using Queens.ViewModels;
 using UnityEngine;
@@ -14,11 +15,6 @@ public class CardView : MonoBehaviour
 
    private Vector3 _initialScale;
 
-   private CardViewModel _viewModel;
-
-   private CardFlowEvent _swipeLeft;
-   private CardFlowEvent _swipeRight;
-   private CardFlowEvent _onDraw;
    private bool _isDragging;
 
    private void OnEnable()
@@ -60,28 +56,17 @@ public class CardView : MonoBehaviour
       }
    }
 
-   public void Bind(CardViewModel viewModel)
-   {
-      _viewModel = viewModel;
-      RebindValues();
-   }
-
-   private void RebindValues()
-   {
-      _swipeLeft = new CardFlowEvent(_viewModel.NoAnswerArgs);
-      _swipeRight = new CardFlowEvent(_viewModel.YesAnswerArgs);
-   }
 
    private void OnSwipeRight()
    {
-      _swipeRight.Raise();
+      new CardFlowEvent(DeckSystem.Instance.CurrentCard.YesAnswerArgs).Raise();
       UnsuscribeEvents();
       Destroy(gameObject);
    }
 
    private void OnSwipeLeft()
    {
-      _swipeLeft.Raise();
+      new CardFlowEvent(DeckSystem.Instance.CurrentCard.NoAnswerArgs).Raise();
       UnsuscribeEvents();
       Destroy(gameObject);
    }
