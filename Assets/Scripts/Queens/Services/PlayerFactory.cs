@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Queens.Models;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace Queens.Services
             if (File.Exists(path))
             {
                 string[] lines = System.IO.File.ReadAllLines(path);
-                savedModel = PlayerParserService.ParseJson(string.Join("\n", lines))[0];
+                savedModel = PlayerParserService.ParseJson(string.Join(Environment.NewLine, lines))[0];
             }
             else
             {

@@ -43,6 +43,8 @@ namespace Queens.Systems
                 .ToList();
             int index = Random.Range(0, filtered.Count);
             toReturn = new CardViewModel(filtered[index]);
+            
+            
             return toReturn;
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Queens.Models;
@@ -23,7 +24,7 @@ namespace Queens.Services
             if (File.Exists(path))
             {
                 string[] lines = File.ReadAllLines(path);
-                savedCards = CardParserService.ParseJson(string.Join("\n", lines));
+                savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, lines));
             }
 
             return savedCards;
