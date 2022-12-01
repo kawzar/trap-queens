@@ -13,7 +13,9 @@ namespace Queens.Managers
         
         private void Start()
         {
-            PollNextCard(null);
+            StartCoroutine(WaitBeforePolling());
+            var instantiated = Instantiate(_cardPrefab, transform);
+            _dialogText.SetText(DeckSystem.Instance.CurrentCard.Dialog);
         }
 
         public void PollNextCard(CardFlowEventArgs args)

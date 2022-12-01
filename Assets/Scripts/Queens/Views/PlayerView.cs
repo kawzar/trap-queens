@@ -1,6 +1,5 @@
-﻿using System;
-using Queens.Systems;
-using Queens.Systems.CardFlow;
+﻿using Queens.Systems;
+using Queens.Systems.Player;
 using Queens.ViewModels;
 using TMPro;
 using UnityEngine;
@@ -12,8 +11,8 @@ namespace Queens.Views
         [SerializeField] private StatsView statsView;
         [SerializeField] private TextMeshProUGUI careerText;
 
-        private PlayerViewModel _viewModel;
-
+        [SerializeField] private PlayerViewModel _viewModel;
+        
         private void Start()
         {
             _viewModel = PlayerSystem.Instance.PlayerViewModel;
@@ -21,11 +20,19 @@ namespace Queens.Views
             careerText.SetText($"{_viewModel.Career} meses en carrera");
         }
         
-        public void OnCardPlayed(CardFlowEventArgs args)
+        public void OnStatsChanged(PlayerFlowEventArgs args)
         {
-            if (args.EventType != CardFlowEventEnum.DRAW) return;
-            _viewModel.Career++;
-            careerText.SetText($"{_viewModel.Career} meses en carrera");
+            switch (args.EventType)
+            {
+                case PlayerEventEnum.STATS_EFFECT:
+                    _viewModel = PlayerSystem.Instance.PlayerViewModel;
+                    statsView.Bind(_viewModel.Stats);
+                    break;
+                case PlayerEventEnum.EXTEND_CAREER:
+                    _viewModel = PlayerSystem.Instance.PlayerViewModel;
+                    careerText.SetText($"{_viewModel.Career} meses en carrera");
+                    break;
+            }
         }
     }
 }

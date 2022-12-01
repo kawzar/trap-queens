@@ -30,19 +30,18 @@ namespace Queens.Systems
 
             switch (args.EventType)
             {
-                case CardFlowEventEnum.DRAW:
-                    playerArgs.Career = PlayerViewModel.Career + 1;
-                    playerArgs.EventType = PlayerEventEnum.EXTEND_CAREER;
-                    _playerFlow.OnCardFlowEventTriggered(playerArgs);
-                    break;
                 case CardFlowEventEnum.NO:
                 case CardFlowEventEnum.YES:
                     playerArgs.EventType = PlayerEventEnum.STATS_EFFECT;
-                    playerArgs.Flow = PlayerViewModel.Stats.Flow + args.FlowDelta;
-                    playerArgs.Health = PlayerViewModel.Stats.Health + args.HealthDelta;
-                    playerArgs.Money = PlayerViewModel.Stats.Money + args.MoneyDelta;
-                    playerArgs.Popularity = PlayerViewModel.Stats.Popularity + args.PopularityDelta;
-                    _playerFlow.OnCardFlowEventTriggered(playerArgs);
+                    
+                    PlayerViewModel.Stats.Flow = PlayerViewModel.Stats.Flow + args.FlowDelta;
+                    PlayerViewModel.Stats.Health = PlayerViewModel.Stats.Health + args.HealthDelta;
+                    PlayerViewModel.Stats.Money = PlayerViewModel.Stats.Money + args.MoneyDelta;
+                    PlayerViewModel.Stats.Popularity = PlayerViewModel.Stats.Popularity + args.PopularityDelta;
+                    new PlayerEvent(playerArgs).Raise();  
+                    PlayerViewModel.Career++;
+                    playerArgs.EventType = PlayerEventEnum.EXTEND_CAREER;
+                    new PlayerEvent(playerArgs).Raise();
                     break;
             }
         }

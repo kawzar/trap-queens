@@ -48,6 +48,8 @@ namespace Queens.Services
             MapProperty(11, x => x.no_popularity);
             MapProperty(12, x => x.no_money);
             MapProperty(13, x => x.no_health);
+            MapProperty(14, x => x.activates_collection);
+
         }
     }
 }

@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 3080152628202191238}
   - component: {fileID: 3080152628202191239}
   - component: {fileID: 8456647362154020220}
-  - component: {fileID: 6700073839091233754}
+  - component: {fileID: -8052767429467902457}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -257,29 +257,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6698a3b675dc84e82f3250e27cf27d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _appeareanceConfigService: {fileID: 11400000, guid: 63f25d871e456f54e80b2fce99b1fb8b, type: 2}
   image: {fileID: 3080152626461218775}
   spawnAnimationEndValue: 255
   spawnAnimationDuration: 1.25
   swipeThreshold: 55
   swipeVelocity: 50
---- !u!50 &6700073839091233754
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &-8052767429467902457
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3080152628202191233}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf09c0a283347b4942c21171ec4e18e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8456647362154020220}
+        m_TargetAssemblyTypeName: CardView, Assembly-CSharp
+        m_MethodName: OnCardPlayed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

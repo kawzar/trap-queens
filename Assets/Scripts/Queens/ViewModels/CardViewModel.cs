@@ -44,12 +44,6 @@ namespace Queens.ViewModels
                 PopularityDelta = card.yes_popularity,
                 HealthDelta = card.yes_health,
             };
-            CardDrawnArgs = new CardFlowEventArgs
-            {
-                CardId = Id,
-                EventType = CardFlowEventEnum.DRAW,
-                CardText = Dialog
-            };
         }
     }
 }

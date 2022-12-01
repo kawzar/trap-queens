@@ -12,7 +12,7 @@ public class CardCreator : EditorWindow
     private MultiColumnListView cardGrid;
     private Button importButton, exportJson;
     private TextField csvTextField;
-    private List<CardModel> items;
+    private List<CardModel> items = new List<CardModel>();
     
     [MenuItem("Kawzar/Tools/CardCreator")]
     public static void ShowExample()
@@ -46,12 +46,7 @@ public class CardCreator : EditorWindow
            }
        };
        
-       importButton.clicked += () =>
-       {
-           items = CardParserService.ParseCsv(csvTextField.value);
-           cardGrid.itemsSource = items;
-
-           cardGrid.columns["id"].makeCell = () => new Label();
+       cardGrid.columns["id"].makeCell = () => new Label();
            cardGrid.columns["name"].makeCell = () => new Label();
            cardGrid.columns["bearer"].makeCell = () => new Label();
            cardGrid.columns["collection"].makeCell = () => new Label();
@@ -97,7 +92,13 @@ public class CardCreator : EditorWindow
             
            cardGrid.selectionType = SelectionType.Multiple;
            cardGrid.style.flexGrow = 1.0f;
+           cardGrid.itemsSource = items;
            
+       importButton.clicked += () =>
+       {
+           items = CardParserService.ParseCsv(csvTextField.value);
+           cardGrid.itemsSource = items;
+
            cardGrid.Rebuild();
        };
     }

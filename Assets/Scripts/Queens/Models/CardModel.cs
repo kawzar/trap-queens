@@ -19,5 +19,6 @@ namespace Queens.Models
         public int no_money{ get; set; }
         public int no_health{ get; set; }
         public int level_lock{ get; set; }
+        public string activates_collection { get; set; }
     }
 }

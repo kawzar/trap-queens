@@ -13,7 +13,7 @@ namespace Queens.Systems.Player
 
         public void Raise()
         {
-            PlayerFlowSystem.Instance.OnCardFlowEventTriggered(args);
+            PlayerFlowSystem.Instance.OnPlayerFlowEventTriggered(args);
         }
     }
     
@@ -26,10 +26,5 @@ namespace Queens.Systems.Player
     public class PlayerFlowEventArgs
     {
         public PlayerEventEnum EventType { get; set; }
-        public int Flow { get; set; }
-        public int Money { get; set; }
-        public int Health { get; set; }
-        public int Popularity { get; set; }
-        public int Career { get; set; }
     }
 }

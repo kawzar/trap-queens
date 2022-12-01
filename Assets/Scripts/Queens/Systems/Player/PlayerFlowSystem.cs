@@ -7,7 +7,9 @@ namespace Queens.Systems.Player
     public class PlayerFlowSystem : ScriptableObject
     {
         public static PlayerFlowSystem Instance { get; set; }
-        private List<PlayerFlowEventListener> eventListeners = new List<PlayerFlowEventListener>();
+
+        private Dictionary<string, PlayerFlowEventListener> eventListeners =
+            new Dictionary<string, PlayerFlowEventListener>();
 
         private void OnEnable()
         {
@@ -19,19 +21,20 @@ namespace Queens.Systems.Player
 
         public void Suscribe(PlayerFlowEventListener gameEventListener)
         {
-            eventListeners.Add(gameEventListener);
+            if(eventListeners.ContainsKey(gameEventListener.name)) return;
+            eventListeners.Add(gameEventListener.name, gameEventListener);
         }
         
         public void Unsuscribe(PlayerFlowEventListener gameEventListener)
         {
-            eventListeners.Remove(gameEventListener);
+            eventListeners.Remove(gameEventListener.name);
         }
 
-        public void OnCardFlowEventTriggered(PlayerFlowEventArgs args)
+        public void OnPlayerFlowEventTriggered(PlayerFlowEventArgs args)
         {
-            for (int i = 0; i < eventListeners.Count; i++)
+            foreach (var eventListener in eventListeners.Values)
             {
-                eventListeners[i].OnEventRaised(args);
+                eventListener.OnEventRaised(args);
             }
         }
     }

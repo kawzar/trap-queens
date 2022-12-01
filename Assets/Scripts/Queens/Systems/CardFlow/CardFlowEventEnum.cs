@@ -3,8 +3,7 @@
     public enum CardFlowEventEnum
     {
         YES,
-        NO,
-        DRAW
+        NO
     }
 
     public class CardFlowEventArgs

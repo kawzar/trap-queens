@@ -11,6 +11,7 @@ namespace Queens.Systems.Player
 
         private void OnEnable() 
         {
+            Debug.Log(gameObject.name);
             PlayerFlowSystem.Instance.Suscribe(this);
         }
 
@@ -21,6 +22,7 @@ namespace Queens.Systems.Player
 
         public void OnEventRaised(PlayerFlowEventArgs args) 
         {
+            Debug.Log(gameObject.name);
             effect.Invoke(args);
         }
     }

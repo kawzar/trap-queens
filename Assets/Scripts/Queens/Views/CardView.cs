@@ -1,12 +1,13 @@
 using DG.Tweening;
+using Queens.Services;
 using Queens.Systems;
 using Queens.Systems.CardFlow;
-using Queens.ViewModels;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CardView : MonoBehaviour
 {
+   [SerializeField] private AppeareanceConfigService _appeareanceConfigService;
    [SerializeField] private Image image;
    [SerializeField] private float spawnAnimationEndValue = 255f;
    [SerializeField] private float spawnAnimationDuration = 1.25f;
@@ -16,10 +17,12 @@ public class CardView : MonoBehaviour
    private Vector3 _initialScale;
 
    private bool _isDragging;
+   private bool _hasSwiped;
 
-   private void OnEnable()
+   private void Start()
    {
       transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration);
+      image.sprite = _appeareanceConfigService.GetCharacterSpriteForCurrentCard();
       InputManager.Instance.OnStartTouch += OnStartedTouch;
       InputManager.Instance.OnEndTouch += OnReleasedFinger;
    }
@@ -33,6 +36,8 @@ public class CardView : MonoBehaviour
    {
       _isDragging = false;
 
+      if (_isDragging) return; // so we don't spawn events
+      
       if (transform.localPosition.x >= swipeThreshold)
       {
          OnSwipeRight();
@@ -59,21 +64,28 @@ public class CardView : MonoBehaviour
 
    private void OnSwipeRight()
    {
+      if (_hasSwiped) return;
+      _hasSwiped = true;
       new CardFlowEvent(DeckSystem.Instance.CurrentCard.YesAnswerArgs).Raise();
       UnsuscribeEvents();
-      Destroy(gameObject);
    }
 
    private void OnSwipeLeft()
    {
+      if (_hasSwiped) return;
+      _hasSwiped = true;
       new CardFlowEvent(DeckSystem.Instance.CurrentCard.NoAnswerArgs).Raise();
       UnsuscribeEvents();
-      Destroy(gameObject);
    }
    
    private void UnsuscribeEvents()
    {
       InputManager.Instance.OnStartTouch -= OnStartedTouch;
       InputManager.Instance.OnEndTouch -= OnReleasedFinger;
+   }
+
+   public void OnCardPlayed(CardFlowEventArgs args)
+   {
+      DestroyImmediate(gameObject);
    }
 }

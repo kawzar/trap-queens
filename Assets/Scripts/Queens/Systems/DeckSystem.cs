@@ -31,6 +31,7 @@ namespace Queens.Systems
         private void Start()
         {
             allCards = _cardFactory.GetSavedCards();
+            allCards.RemoveAll(x => x.id == 0); // el mapping lo arreglamo despue
             CurrentCard = GetNextCard();
         }
 
@@ -44,8 +45,13 @@ namespace Queens.Systems
             int index = Random.Range(0, filtered.Count);
             toReturn = new CardViewModel(filtered[index]);
             
-            
+            Debug.Log($"{toReturn.Bearer}, {toReturn.Name}, {toReturn.Id}");
             return toReturn;
+        }
+
+        public void OnCardPlayed(CardFlowEventArgs args)
+        {
+            CurrentCard = GetNextCard();
         }
     }
 }

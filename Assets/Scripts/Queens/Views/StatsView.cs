@@ -31,12 +31,5 @@ namespace Queens.Views
             _popularity.value = _viewModel.Popularity;
             _health.value = _viewModel.Health;
         }
-        
-        public void OnStatsChanged(PlayerFlowEventArgs args)
-        {
-            if (args == null || args.EventType == PlayerEventEnum.STATS_EFFECT) return;
-            _viewModel = PlayerSystem.Instance.PlayerViewModel.Stats;
-            RebindValues();
-        }
     }
 }
