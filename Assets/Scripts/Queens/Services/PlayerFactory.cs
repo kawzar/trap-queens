@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using Queens.Models;
+using Queens.Systems;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Queens.Services
@@ -15,12 +17,13 @@ namespace Queens.Services
         [Range(0, 100)] public int DefaultHealth = 25;
         [Range(0, 100)] public int DefaultMoney = 25;
 
+        [SerializeField] int typeName = 7; // 7 - Sci Fi Name
         private PlayerModel savedModel;
-        
+       
         public PlayerModel GetSavedModel()
         {
             if(savedModel != null) return savedModel;
-            
+               
             var path = Path.Combine(FilePath, FileName);
             if (File.Exists(path))
             {
@@ -35,6 +38,8 @@ namespace Queens.Services
                 savedModel.status.health = DefaultHealth;
                 savedModel.status.popularity = DefaultPopularity;
                 savedModel.status.money = DefaultMoney;
+                savedModel.name = NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(typeName));
+                Debug.Log(savedModel.name);
             }
 
             return savedModel;

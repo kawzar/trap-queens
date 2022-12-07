@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Queens.Models;
 using Queens.Systems.CardFlow;
 
@@ -12,6 +14,8 @@ namespace Queens.ViewModels
         public string Dialog{ get; set; }
         
         public int? level_lock{ get; set; }
+        
+        public List<string> activates_colliection { get; set; }
 
         public CardFlowEventArgs YesAnswerArgs;
         public CardFlowEventArgs NoAnswerArgs;
@@ -25,6 +29,7 @@ namespace Queens.ViewModels
             Id = card.id;
             level_lock = card.level_lock;
             Name = card.name;
+            activates_colliection = card.activates_collection.Split(',').ToList();
             
             NoAnswerArgs = new CardFlowEventArgs
             {

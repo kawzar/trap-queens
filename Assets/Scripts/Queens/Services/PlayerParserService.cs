@@ -22,6 +22,7 @@ namespace Queens.Services
             model.status.money = viewModel.Stats.Money;
             model.status.popularity = viewModel.Stats.Popularity;
             model.career = viewModel.Career;
+            model.name = viewModel.Name;
 
             return JsonConvert.SerializeObject(model);
         }

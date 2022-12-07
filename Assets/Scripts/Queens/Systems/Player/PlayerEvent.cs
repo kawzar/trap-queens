@@ -20,7 +20,8 @@ namespace Queens.Systems.Player
     public enum PlayerEventEnum
     {
         EXTEND_CAREER,
-        STATS_EFFECT
+        STATS_EFFECT,
+        ROUND_END
     }
 
     public class PlayerFlowEventArgs

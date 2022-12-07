@@ -17,6 +17,7 @@ namespace Queens.Systems
         public CardViewModel CurrentCard { get; private set; }
 
         private List<CardModel> allCards;
+        private List<int> usedCardIds = new List<int>();
 
         public static DeckSystem Instance { get; set; }
 
@@ -37,15 +38,20 @@ namespace Queens.Systems
 
         private CardViewModel GetNextCard()
         {
-            CardViewModel toReturn;
-            var filtered = allCards.Where(c => c.level_lock <= PlayerSystem.Instance.PlayerViewModel.Career)
-                //.Where(c => string.IsNullOrEmpty(c.collection) ||
-                  //          _playerSystem.PlayerViewModel.ActiveCollections.Contains(c.collection))
-                .ToList();
-            int index = Random.Range(0, filtered.Count);
-            toReturn = new CardViewModel(filtered[index]);
-            
-            Debug.Log($"{toReturn.Bearer}, {toReturn.Name}, {toReturn.Id}");
+            CardViewModel toReturn = null;
+            var filtered = allCards.Where(c => !usedCardIds.Contains(c.id))
+                .Where(c => c.level_lock <= PlayerSystem.Instance.PlayerViewModel.Career)
+                .Where(c => string.IsNullOrEmpty(c.collection) || PlayerSystem.Instance.PlayerViewModel.ActiveCollections.Contains(c.collection))
+                .ToArray();
+
+            if (filtered.Any())
+            {
+                int index = Random.Range(0, filtered.Length);
+                toReturn = new CardViewModel(filtered[index]);
+                usedCardIds.Add(toReturn.Id);
+                Debug.Log($"{toReturn.Bearer}, {toReturn.Name}, {toReturn.Id}");
+            }
+
             return toReturn;
         }
 

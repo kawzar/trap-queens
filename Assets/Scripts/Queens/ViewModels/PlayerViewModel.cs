@@ -14,6 +14,9 @@ namespace Queens.ViewModels
             Stats = new StatsViewModel(model.status);
             Career = model.career;
             ActiveCollections = model.active_collections;
+            Name = Name;
         }
+        
+        public string Name { get; set; }
     }
 }
