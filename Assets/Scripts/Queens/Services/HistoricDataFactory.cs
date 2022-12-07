@@ -37,6 +37,10 @@ namespace Queens.Services
 
         public void AddHistoricData(PlayerViewModel vm)
         {
+            if (savedModel == null)
+            {
+                savedModel = new List<HistoricPlayerModel>();
+            }
             savedModel.Add(new HistoricPlayerModel(vm.Career, vm.Name));
             var path = Path.Combine(FilePath, FileName);
             File.WriteAllText(path, JsonConvert.SerializeObject(savedModel));

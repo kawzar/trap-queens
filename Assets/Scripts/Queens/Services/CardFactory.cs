@@ -13,7 +13,7 @@ namespace Queens.Services
         public string FilePath = Application.streamingAssetsPath;
         public string FileName = "cards.json";
 
-        private List<CardModel> savedCards;
+        private List<CardModel> savedCards = new List<CardModel>();
         
 
         public List<CardModel> GetSavedCards()

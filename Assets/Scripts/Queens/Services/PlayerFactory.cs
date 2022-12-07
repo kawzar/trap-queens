@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using Queens.Models;
-using Queens.Systems;
-using Unity.VisualScripting;
+using RandomGenerator.Scripts.FantasyNameGenerators;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Queens.Services
 {
@@ -17,9 +17,11 @@ namespace Queens.Services
         [Range(0, 100)] public int DefaultHealth = 25;
         [Range(0, 100)] public int DefaultMoney = 25;
 
-        [SerializeField] int typeName = 7; // 7 - Sci Fi Name
         private PlayerModel savedModel;
-       
+
+        private Random m_random = new Random();
+        private readonly HumanNameGenerator _generator = new HumanNameGenerator();
+
         public PlayerModel GetSavedModel()
         {
             if(savedModel != null) return savedModel;
@@ -27,7 +29,7 @@ namespace Queens.Services
             var path = Path.Combine(FilePath, FileName);
             if (File.Exists(path))
             {
-                string[] lines = System.IO.File.ReadAllLines(path);
+                string[] lines = File.ReadAllLines(path);
                 savedModel = PlayerParserService.ParseJson(string.Join(Environment.NewLine, lines))[0];
             }
             else
@@ -38,7 +40,7 @@ namespace Queens.Services
                 savedModel.status.health = DefaultHealth;
                 savedModel.status.popularity = DefaultPopularity;
                 savedModel.status.money = DefaultMoney;
-                savedModel.name = NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(typeName));
+                savedModel.name = _generator.Generate(m_random);
                 Debug.Log(savedModel.name);
             }
 
