@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Queens.Models;
 using Queens.ViewModels;
@@ -12,7 +10,6 @@ namespace Queens.Services
 
     public class HistoricDataFactory : ScriptableObject
     {
-        public string FilePath = Application.streamingAssetsPath;
         public string FileName = "historic.json";
 
         private List<HistoricPlayerModel> savedModel;
@@ -20,12 +17,11 @@ namespace Queens.Services
         public List<HistoricPlayerModel> GetHistoricData()
         {
             if(savedModel != null) return savedModel;
-            
-            var path = Path.Combine(FilePath, FileName);
-            if (File.Exists(path))
+
+            if (PlayerPrefs.HasKey(FileName))
             {
-                string[] lines = System.IO.File.ReadAllLines(path);
-                savedModel = JsonConvert.DeserializeObject<List<HistoricPlayerModel>>(string.Join(Environment.NewLine, lines));
+                var savedText = PlayerPrefs.GetString(FileName);
+                savedModel = JsonConvert.DeserializeObject<List<HistoricPlayerModel>>(savedText);
             }
             else
             {
@@ -42,8 +38,8 @@ namespace Queens.Services
                 savedModel = new List<HistoricPlayerModel>();
             }
             savedModel.Add(new HistoricPlayerModel(vm.Career, vm.Name));
-            var path = Path.Combine(FilePath, FileName);
-            File.WriteAllText(path, JsonConvert.SerializeObject(savedModel));
+            PlayerPrefs.SetString(FileName, JsonConvert.SerializeObject(savedModel));
+            PlayerPrefs.Save();
         }
     }
 }

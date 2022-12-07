@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Queens.Global.Constants;
 using Queens.Models;
+using UnityEngine;
 
 namespace Queens.ViewModels
 {
@@ -24,8 +26,10 @@ namespace Queens.ViewModels
 
         public bool AreStatsValid()
         {
-            return Flow > 0 && Flow < 100 && Popularity > 0 && Popularity < 100 && Health > 0 && Money > 0 &&
-                   Money < 100;
+            return Flow is > PlayerConstants.MIN_FLOW and < PlayerConstants.MAX_FLOW 
+                   && Popularity is > PlayerConstants.MIN_POPULARITY and < PlayerConstants.MAX_POPULARITY 
+                   && Health > PlayerConstants.MIN_HEALTH 
+                   && Money is > PlayerConstants.MIN_MONEY and < PlayerConstants.MAX_MONEY;
         }
     }
 }
