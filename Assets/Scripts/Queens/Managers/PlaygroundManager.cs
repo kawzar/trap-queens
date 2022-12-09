@@ -1,7 +1,7 @@
-using System.Collections;
 using Queens.Systems;
-using Queens.Systems.CardFlow;
+using Queens.ViewModels;
 using TMPro;
+using UniRx;
 using UnityEngine;
 
 namespace Queens.Managers
@@ -13,21 +13,13 @@ namespace Queens.Managers
         
         private void Start()
         {
-            StartCoroutine(WaitBeforePolling());
-            var instantiated = Instantiate(_cardPrefab, transform);
-            _dialogText.SetText(DeckSystem.Instance.CurrentCard.Dialog);
+            DeckSystem.Instance.CurrentCardViewModel.Subscribe(OnNext);
         }
 
-        public void PollNextCard(CardFlowEventArgs args)
+        private void OnNext(CardViewModel obj)
         {
-            StartCoroutine(WaitBeforePolling());
             var instantiated = Instantiate(_cardPrefab, transform);
-            _dialogText.SetText(DeckSystem.Instance.CurrentCard.Dialog);
-        }
-
-        IEnumerator WaitBeforePolling()
-        {
-            yield return new WaitForSeconds(0.25f);
+            _dialogText.SetText(obj.Dialog);
         }
     }
 }
