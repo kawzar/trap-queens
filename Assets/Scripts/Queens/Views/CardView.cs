@@ -66,7 +66,7 @@ public class CardView : MonoBehaviour
    {
       if (_hasSwiped) return;
       _hasSwiped = true;
-      new CardFlowEvent(DeckSystem.Instance.CurrentCard.YesAnswerArgs).Raise();
+      new CardFlowEvent(DeckSystem.Instance.CurrentCardViewModel.Value.YesAnswerArgs).Raise();
       UnsuscribeEvents();
    }
 
@@ -74,7 +74,7 @@ public class CardView : MonoBehaviour
    {
       if (_hasSwiped) return;
       _hasSwiped = true;
-      new CardFlowEvent(DeckSystem.Instance.CurrentCard.NoAnswerArgs).Raise();
+      new CardFlowEvent(DeckSystem.Instance.CurrentCardViewModel.Value.NoAnswerArgs).Raise();
       UnsuscribeEvents();
    }
    

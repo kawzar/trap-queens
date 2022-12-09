@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Queens.Systems;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Queens.Services
 {
@@ -15,7 +14,7 @@ namespace Queens.Services
 
         public Sprite GetCharacterSpriteForCurrentCard()
         {
-            return characterConfig.SingleOrDefault(c => c.CharacterName.Equals(DeckSystem.Instance.CurrentCard.Bearer))
+            return characterConfig.SingleOrDefault(c => c.CharacterName.Equals(DeckSystem.Instance.CurrentCardViewModel.Value.Bearer))
                 .Image;
         }
     }
