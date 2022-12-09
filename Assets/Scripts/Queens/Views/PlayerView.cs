@@ -2,6 +2,7 @@
 using Queens.Systems.Player;
 using Queens.ViewModels;
 using TMPro;
+using UniRx;
 using UnityEngine;
 
 namespace Queens.Views
@@ -17,9 +18,8 @@ namespace Queens.Views
         {
             _viewModel = PlayerSystem.Instance.PlayerViewModel;
             statsView.Bind(_viewModel.Stats);
-            Debug.Log(_viewModel.Name);
             nameText.SetText(_viewModel.Name);
-            careerText.SetText($"{_viewModel.Career} meses en carrera");
+            _viewModel.Career.Subscribe(next => careerText.SetText($"{next} meses en carrera"));
         }
         
         public void OnStatsChanged(PlayerFlowEventArgs args)
@@ -35,11 +35,7 @@ namespace Queens.Views
                         args.EventType = PlayerEventEnum.ROUND_END;
                         new PlayerEvent(args).Raise();
                     }
-                    break;
-                case PlayerEventEnum.EXTEND_CAREER:
-                    _viewModel = PlayerSystem.Instance.PlayerViewModel;
-                    careerText.SetText($"{_viewModel.Career} meses en carrera");
-                    nameText.SetText(_viewModel.Name);
+
                     break;
             }
         }

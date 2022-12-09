@@ -17,11 +17,11 @@ namespace Queens.Services
             PlayerModel model = new PlayerModel();
             model.status = new Status();
             model.active_collections = viewModel.ActiveCollections;
-            model.status.flow = viewModel.Stats.Flow;
-            model.status.health = viewModel.Stats.Health;
-            model.status.money = viewModel.Stats.Money;
-            model.status.popularity = viewModel.Stats.Popularity;
-            model.career = viewModel.Career;
+            model.status.flow = viewModel.Stats.Flow.Value;
+            model.status.health = viewModel.Stats.Health.Value;
+            model.status.money = viewModel.Stats.Money.Value;
+            model.status.popularity = viewModel.Stats.Popularity.Value;
+            model.career = viewModel.Career.Value;
             model.name = viewModel.Name;
 
             return JsonConvert.SerializeObject(model);

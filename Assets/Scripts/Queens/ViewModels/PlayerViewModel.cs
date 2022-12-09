@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using Queens.Models;
+using UniRx;
 
 namespace Queens.ViewModels
 {
     public class PlayerViewModel
     {
         public StatsViewModel Stats { get; set; }
-        public int Career { get; set; }
+        public IntReactiveProperty Career { get; set; }
         public List<string> ActiveCollections { get; set; }
 
         public PlayerViewModel(PlayerModel model)
         {
             Stats = new StatsViewModel(model.status);
-            Career = model.career;
+            Career = new IntReactiveProperty(model.career);
             ActiveCollections = model.active_collections;
             Name = model.name;
         }

@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using Queens.Global.Constants;
+﻿using Queens.Global.Constants;
 using Queens.Models;
-using UnityEngine;
+using UniRx;
 
 namespace Queens.ViewModels
 {
     public class StatsViewModel
     {
-        public int Flow { get; set; }
-        public int Popularity { get; set; }
-        public int Money { get; set; }
-        public int Health { get; set; }
+        public IntReactiveProperty Flow { get; set; }
+        public IntReactiveProperty Popularity { get; set; }
+        public IntReactiveProperty Money { get; set; }
+        public IntReactiveProperty Health { get; set; }
 
         public StatsViewModel()
         {
@@ -18,18 +17,18 @@ namespace Queens.ViewModels
 
         public StatsViewModel(Status model)
         {
-            Flow = model.flow;
-            Popularity = model.popularity;
-            Money = model.money;
-            Health = model.health;
+            Flow = new IntReactiveProperty(model.flow);
+            Popularity = new IntReactiveProperty( model.popularity);
+            Money = new IntReactiveProperty(model.money);
+            Health = new IntReactiveProperty(model.health);
         }
 
         public bool AreStatsValid()
         {
-            return Flow is > PlayerConstants.MIN_FLOW and < PlayerConstants.MAX_FLOW 
-                   && Popularity is > PlayerConstants.MIN_POPULARITY and < PlayerConstants.MAX_POPULARITY 
-                   && Health > PlayerConstants.MIN_HEALTH 
-                   && Money is > PlayerConstants.MIN_MONEY and < PlayerConstants.MAX_MONEY;
+            return Flow.Value is > PlayerConstants.MIN_FLOW and < PlayerConstants.MAX_FLOW 
+                   && Popularity.Value is > PlayerConstants.MIN_POPULARITY and < PlayerConstants.MAX_POPULARITY 
+                   && Health.Value > PlayerConstants.MIN_HEALTH 
+                   && Money.Value is > PlayerConstants.MIN_MONEY and < PlayerConstants.MAX_MONEY;
         }
     }
 }

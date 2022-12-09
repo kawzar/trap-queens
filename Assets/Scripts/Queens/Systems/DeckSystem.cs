@@ -40,7 +40,7 @@ namespace Queens.Systems
         {
             CardViewModel toReturn = null;
             var filtered = allCards.Where(c => !usedCardIds.Contains(c.id))
-                .Where(c => c.level_lock <= PlayerSystem.Instance.PlayerViewModel.Career)
+                .Where(c => c.level_lock <= PlayerSystem.Instance.PlayerViewModel.Career.Value)
                 .Where(c => string.IsNullOrEmpty(c.collection) || PlayerSystem.Instance.PlayerViewModel.ActiveCollections.Contains(c.collection))
                 .ToArray();
 

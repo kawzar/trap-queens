@@ -37,7 +37,7 @@ namespace Queens.Services
             {
                 savedModel = new List<HistoricPlayerModel>();
             }
-            savedModel.Add(new HistoricPlayerModel(vm.Career, vm.Name));
+            savedModel.Add(new HistoricPlayerModel(vm.Career.Value, vm.Name));
             PlayerPrefs.SetString(FileName, JsonConvert.SerializeObject(savedModel));
             PlayerPrefs.Save();
         }
