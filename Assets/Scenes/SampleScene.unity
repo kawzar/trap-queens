@@ -541,6 +541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _historicDataFactory: {fileID: 11400000, guid: 95d0e8189fc8fea47a57a240e74d53cb, type: 2}
+  _cardFactory: {fileID: 378665458}
 --- !u!4 &378665457
 Transform:
   m_ObjectHideFlags: 0
@@ -565,24 +566,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 378665455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcaadd977d25428495cbdd34c48a6e51, type: 3}
+  m_Script: {fileID: 11500000, guid: 73db9970c7ca4745968d33daf9208021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 378665456}
-        m_TargetAssemblyTypeName: Queens.Managers.GameManager, Assembly-CSharp
-        m_MethodName: OnPlayerLost
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  FileName: cards.json
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1688,7 +1675,6 @@ GameObject:
   - component: {fileID: 1352909154}
   - component: {fileID: 1352909153}
   - component: {fileID: 1352909156}
-  - component: {fileID: 1352909157}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -1709,7 +1695,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerFactory: {fileID: 11400000, guid: 298862aeba447534782c40592870ac51, type: 2}
-  _playerFlow: {fileID: 11400000, guid: 6e3bde1f5fc5fa843afe2f6dd9de6ca2, type: 2}
 --- !u!114 &1352909154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1722,7 +1707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef98097d7551b474aa002313910933c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardFactory: {fileID: 1352909157}
+  _cardFactory: {fileID: 378665458}
   _cardFlow: {fileID: 11400000, guid: f7d7f020b8d5d3a4cb3af49aeb7c7ad1, type: 2}
 --- !u!4 &1352909155
 Transform:
@@ -1778,19 +1763,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1352909157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1352909152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73db9970c7ca4745968d33daf9208021, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FileName: cards.json
 --- !u!1 &1425311812
 GameObject:
   m_ObjectHideFlags: 0

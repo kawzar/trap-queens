@@ -27,6 +27,7 @@ namespace Queens.Systems
             {
                 Instance = this;
             }
+            
             allCards = _cardFactory.GetSavedCards();
             CategorizeByCollection();
             CurrentCardViewModel.Value = GetNextCard();
@@ -37,7 +38,8 @@ namespace Queens.Systems
             List<CardModel> enabledCards = new List<CardModel>();
             foreach (var key in cardsByCollection.Keys)
             {
-                if (PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Contains(key))
+                if (PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Contains(key) 
+                    || string.IsNullOrEmpty(key))
                 {
                     enabledCards.AddRange(cardsByCollection[key]);
                 }
@@ -52,7 +54,7 @@ namespace Queens.Systems
                     enabledCards.RemoveAt(i);
                 }
             }
-
+            
             if (!enabledCards.Any())
             {
                 Debug.LogError("No more cards");
