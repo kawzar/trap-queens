@@ -8,6 +8,7 @@ namespace Queens.Managers
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private HistoricDataFactory _historicDataFactory;
+        [SerializeField] private CardFactory _cardFactory;
         public static GameManager Instance { get; private set; }
         
         

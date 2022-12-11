@@ -18,6 +18,11 @@ namespace Queens.Managers
 
         private void OnNext(CardViewModel obj)
         {
+            if (obj == null)
+            {
+                Debug.Log("CardViewModel is null");
+                return;
+            }
             var instantiated = Instantiate(_cardPrefab, transform);
             _dialogText.SetText(obj.Dialog);
         }

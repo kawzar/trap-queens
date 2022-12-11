@@ -14,7 +14,7 @@ namespace Queens.ViewModels
         {
             Stats = new StatsViewModel(model.status);
             Career = new IntReactiveProperty(model.career);
-            ActiveCollections = model.active_collections;
+            ActiveCollections = model.active_collections ?? new List<string>();
             Name = model.name;
         }
         
