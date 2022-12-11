@@ -30,6 +30,6 @@ public class MenuManager : MonoBehaviour
     
     public void OnPlay()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }
