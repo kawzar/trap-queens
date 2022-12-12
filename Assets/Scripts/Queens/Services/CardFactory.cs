@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Queens.Models;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -14,7 +16,7 @@ namespace Queens.Services
 
         private List<CardModel> savedCards = new List<CardModel>();
 
-        private void Awake()
+        private async UniTask LoadSavedCards()
         {
 #if UNITY_EDITOR
             var path = Path.Combine(Application.streamingAssetsPath, FileName);
@@ -23,29 +25,24 @@ namespace Queens.Services
                 string[] lines = File.ReadAllLines(path);
                 savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, lines));
             }
-#else
-            StartCoroutine(LoadCardsForWebGL());
+            #else
+            string filePath = Path.Combine(Application.streamingAssetsPath, FileName);
+            var fileText = await GetTextAsync(UnityWebRequest.Get(filePath));
+            savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, fileText));
+
 #endif
         }
 
-        public List<CardModel> GetSavedCards()
+        public async UniTask<List<CardModel>> GetSavedCards()
         {
+            await LoadSavedCards();
             return savedCards;
         }
         
-        IEnumerator LoadCardsForWebGL()
+        async UniTask<string> GetTextAsync(UnityWebRequest req)
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, FileName);
-            UnityWebRequest www = UnityWebRequest.Get(filePath);
-            yield return www.SendWebRequest();
- 
-            if (www.result != UnityWebRequest.Result.Success) {
-                Debug.Log(www.error);
-            }
-            else 
-            {
-                savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, www.downloadHandler.text));
-            }
+            var op = await req.SendWebRequest();
+            return op.downloadHandler.text;
         }
     }
 }

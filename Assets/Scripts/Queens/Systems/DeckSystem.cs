@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Queens.Models;
 using Queens.Services;
 using Queens.Systems.CardFlow;
@@ -21,14 +22,14 @@ namespace Queens.Systems
         public IReactiveProperty<CardViewModel> CurrentCardViewModel= new ReactiveProperty<CardViewModel>();
         public static DeckSystem Instance { get; set; }
 
-        private void Awake()
+        private async UniTaskVoid Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
             }
             
-            allCards = _cardFactory.GetSavedCards();
+            allCards = await _cardFactory.GetSavedCards();
             CategorizeByCollection();
             CurrentCardViewModel.Value = GetNextCard();
         }

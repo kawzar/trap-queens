@@ -22,6 +22,7 @@ namespace Queens.Managers
 
         public void OnPlay()
         {
+            
             SceneManager.LoadScene(1);
         }
 
