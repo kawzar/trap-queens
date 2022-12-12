@@ -1,0 +1,40 @@
+name: Build project
+on: 
+  workflow_dispatch:
+jobs:
+  buildForWebGL:
+    name: Build for WebGL
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          lfs: true
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-WebGL
+          restore-keys: Library-
+      - name: Start Build
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: WebGL
+          versioning: Semantic          
+      - name: Upload artifact 
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-${{ steps.date.outputs.date }}-${{ github.run_id	}}
+          path: build/WebGL
