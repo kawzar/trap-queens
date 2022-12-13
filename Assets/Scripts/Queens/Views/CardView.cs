@@ -19,7 +19,7 @@ public class CardView : MonoBehaviour
    private bool _isDragging;
    private bool _hasSwiped;
 
-   private void Start()
+  private void Start()
    {
       transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration);
       image.sprite = _appeareanceConfigService.GetCharacterSpriteForCurrentCard();
@@ -66,26 +66,23 @@ public class CardView : MonoBehaviour
    {
       if (_hasSwiped) return;
       _hasSwiped = true;
-      new CardFlowEvent(DeckSystem.Instance.CurrentCardViewModel.Value.YesAnswerArgs).Raise();
+      DeckSystem.Instance.CurrentCardViewModel.Value.CardPlayed(CardFlowEventEnum.YES);
       UnsuscribeEvents();
+      Destroy(gameObject);
    }
 
    private void OnSwipeLeft()
    {
       if (_hasSwiped) return;
       _hasSwiped = true;
-      new CardFlowEvent(DeckSystem.Instance.CurrentCardViewModel.Value.NoAnswerArgs).Raise();
+      DeckSystem.Instance.CurrentCardViewModel.Value.CardPlayed(CardFlowEventEnum.NO);
       UnsuscribeEvents();
+      Destroy(gameObject);
    }
    
    private void UnsuscribeEvents()
    {
       InputManager.Instance.OnStartTouch -= OnStartedTouch;
       InputManager.Instance.OnEndTouch -= OnReleasedFinger;
-   }
-
-   public void OnCardPlayed(CardFlowEventArgs args)
-   {
-      DestroyImmediate(gameObject);
    }
 }

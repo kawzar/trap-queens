@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Queens.Models;
 using Queens.Systems.CardFlow;
+using UniRx;
 
 namespace Queens.ViewModels
 {
@@ -17,10 +19,11 @@ namespace Queens.ViewModels
         
         public List<string> activates_colliection { get; set; }
 
-        public CardFlowEventArgs YesAnswerArgs;
-        public CardFlowEventArgs NoAnswerArgs;
-        public CardFlowEventArgs CardDrawnArgs;
-
+        private CardFlowEventArgs YesAnswerArgs;
+        private CardFlowEventArgs NoAnswerArgs;
+        
+        private Subject<CardFlowEventArgs> _cardEventsubject = new Subject<CardFlowEventArgs>();
+        public IObservable<CardFlowEventArgs> CardEventObservable => _cardEventsubject.AsObservable();
         public CardViewModel(CardModel card)
         {
             Bearer = card.bearer;
@@ -49,6 +52,19 @@ namespace Queens.ViewModels
                 PopularityDelta = card.yes_popularity,
                 HealthDelta = card.yes_health,
             };
+        }
+
+        public void CardPlayed(CardFlowEventEnum evt)
+        {
+            switch (evt)
+            {
+                case CardFlowEventEnum.YES:
+                    _cardEventsubject.OnNext(YesAnswerArgs);
+                    break;
+                case CardFlowEventEnum.NO:
+                    _cardEventsubject.OnNext(NoAnswerArgs);
+                    break;
+            }
         }
     }
 }

@@ -18,12 +18,10 @@ namespace Queens.Services
         private PlayerModel savedModel;
 
         private Random m_random;
-        private readonly HumanNameGenerator _generator = new HumanNameGenerator();
+        private readonly RapperNameGenerator _generator = new RapperNameGenerator();
 
         public PlayerModel GetSavedModel()
         {
-            if(savedModel != null) return savedModel;
-
             if (PlayerPrefs.HasKey(FileName))
             {
                 string savedValue = PlayerPrefs.GetString(FileName);

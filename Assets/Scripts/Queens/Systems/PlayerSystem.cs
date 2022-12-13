@@ -1,4 +1,5 @@
-﻿using Queens.Managers;
+﻿using System;
+using Queens.Managers;
 using Queens.Services;
 using Queens.Systems.CardFlow;
 using Queens.Systems.Events;
@@ -24,7 +25,12 @@ namespace Queens.Systems
             
             PlayerViewModel = new ReactiveProperty<PlayerViewModel>(new PlayerViewModel(_playerFactory.GetSavedModel()));
         }
-        
+
+        private void Start()
+        {
+            DeckSystem.Instance.CurrentCardViewModel.Value.CardEventObservable.Subscribe(OnCardFlowEventTriggered);
+        }
+
         public void OnCardFlowEventTriggered(CardFlowEventArgs args)
         {
             switch (args.EventType)

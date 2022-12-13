@@ -1674,7 +1674,6 @@ GameObject:
   - component: {fileID: 1352909155}
   - component: {fileID: 1352909154}
   - component: {fileID: 1352909153}
-  - component: {fileID: 1352909156}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -1708,7 +1707,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardFactory: {fileID: 378665458}
-  _cardFlow: {fileID: 11400000, guid: f7d7f020b8d5d3a4cb3af49aeb7c7ad1, type: 2}
 --- !u!4 &1352909155
 Transform:
   m_ObjectHideFlags: 0
@@ -1724,45 +1722,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1352909156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1352909152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acf09c0a283347b4942c21171ec4e18e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effect:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1352909154}
-        m_TargetAssemblyTypeName: Queens.Systems.DeckSystem, Assembly-CSharp
-        m_MethodName: OnCardPlayed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1352909153}
-        m_TargetAssemblyTypeName: Queens.Systems.PlayerSystem, Assembly-CSharp
-        m_MethodName: OnCardFlowEventTriggered
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1425311812
 GameObject:
   m_ObjectHideFlags: 0

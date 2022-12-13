@@ -13,7 +13,6 @@ namespace Queens.Systems
     public class DeckSystem : MonoBehaviour
     {
         [SerializeField] private CardFactory _cardFactory;
-        [SerializeField] private CardFlowSystem _cardFlow;
         
         private List<CardModel> allCards;
         private List<int> usedCardIds = new List<int>();
@@ -32,6 +31,17 @@ namespace Queens.Systems
             allCards = await _cardFactory.GetSavedCards();
             CategorizeByCollection();
             CurrentCardViewModel.Value = GetNextCard();
+        }
+
+        private void Start()
+        {
+            CurrentCardViewModel.Value.CardEventObservable.Subscribe(OnCardPlayed);
+        }
+
+        private void OnCardPlayed(CardFlowEventArgs args)
+        {
+            CurrentCardViewModel.Value = GetNextCard();
+            CurrentCardViewModel.Value.CardEventObservable.Subscribe(OnCardPlayed);
         }
 
         private CardViewModel GetNextCard()
@@ -65,11 +75,6 @@ namespace Queens.Systems
             int index = Random.Range(0, enabledCards.Count);
             usedCardIds.Add(enabledCards[index].id);
             return new CardViewModel(enabledCards[index]);
-        }
-
-        public void OnCardPlayed(CardFlowEventArgs args)
-        {
-            CurrentCardViewModel.Value = GetNextCard();;
         }
 
         private void CategorizeByCollection()
