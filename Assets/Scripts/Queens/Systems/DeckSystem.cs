@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Queens.Models;
 using Queens.Services;
-using Queens.Systems.CardFlow;
 using Queens.ViewModels;
 using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Queens.Systems
 {
@@ -19,6 +20,10 @@ namespace Queens.Systems
         private Dictionary<string, List<CardModel>> cardsByCollection = new Dictionary<string, List<CardModel>>();
 
         public IReactiveProperty<CardViewModel> CurrentCardViewModel= new ReactiveProperty<CardViewModel>();
+        
+        private Subject<CardFlowEventArgs> _cardEventsubject = new Subject<CardFlowEventArgs>();
+        public IObservable<CardFlowEventArgs> CardEventObservable => _cardEventsubject.AsObservable();
+        
         public static DeckSystem Instance { get; set; }
 
         private async UniTaskVoid Awake()
@@ -31,17 +36,6 @@ namespace Queens.Systems
             allCards = await _cardFactory.GetSavedCards();
             CategorizeByCollection();
             CurrentCardViewModel.Value = GetNextCard();
-        }
-
-        private void Start()
-        {
-            CurrentCardViewModel.Value.CardEventObservable.Subscribe(OnCardPlayed);
-        }
-
-        private void OnCardPlayed(CardFlowEventArgs args)
-        {
-            CurrentCardViewModel.Value = GetNextCard();
-            CurrentCardViewModel.Value.CardEventObservable.Subscribe(OnCardPlayed);
         }
 
         private CardViewModel GetNextCard()
@@ -91,6 +85,21 @@ namespace Queens.Systems
                     cardsByCollection.Add(allCards[i].collection, value);
                 }
             }
+        }
+        
+        public void CardPlayed(CardFlowEventEnum evt)
+        {
+            switch (evt)
+            {
+                case CardFlowEventEnum.YES:
+                    _cardEventsubject.OnNext(CurrentCardViewModel.Value.YesAnswerArgs);
+                    break;
+                case CardFlowEventEnum.NO:
+                    _cardEventsubject.OnNext(CurrentCardViewModel.Value.NoAnswerArgs);
+                    break;
+            }
+            
+            CurrentCardViewModel.Value = GetNextCard();
         }
     }
 }

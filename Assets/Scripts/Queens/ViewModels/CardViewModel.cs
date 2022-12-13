@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Queens.Models;
-using Queens.Systems.CardFlow;
+using Queens.Systems;
 using UniRx;
 
 namespace Queens.ViewModels
@@ -17,13 +15,9 @@ namespace Queens.ViewModels
         
         public int? level_lock{ get; set; }
         
-        public List<string> activates_colliection { get; set; }
-
-        private CardFlowEventArgs YesAnswerArgs;
-        private CardFlowEventArgs NoAnswerArgs;
+        public CardFlowEventArgs YesAnswerArgs { get; private set; }
+        public CardFlowEventArgs NoAnswerArgs { get; private set; }
         
-        private Subject<CardFlowEventArgs> _cardEventsubject = new Subject<CardFlowEventArgs>();
-        public IObservable<CardFlowEventArgs> CardEventObservable => _cardEventsubject.AsObservable();
         public CardViewModel(CardModel card)
         {
             Bearer = card.bearer;
@@ -32,8 +26,7 @@ namespace Queens.ViewModels
             Id = card.id;
             level_lock = card.level_lock;
             Name = card.name;
-            activates_colliection = card.activates_collection.Split(',').ToList();
-            
+           
             NoAnswerArgs = new CardFlowEventArgs
             {
                 CardId = Id,
@@ -51,20 +44,8 @@ namespace Queens.ViewModels
                 MoneyDelta = card.yes_money,
                 PopularityDelta = card.yes_popularity,
                 HealthDelta = card.yes_health,
+                ActivatesCollection = card.activates_collection
             };
-        }
-
-        public void CardPlayed(CardFlowEventEnum evt)
-        {
-            switch (evt)
-            {
-                case CardFlowEventEnum.YES:
-                    _cardEventsubject.OnNext(YesAnswerArgs);
-                    break;
-                case CardFlowEventEnum.NO:
-                    _cardEventsubject.OnNext(NoAnswerArgs);
-                    break;
-            }
         }
     }
 }

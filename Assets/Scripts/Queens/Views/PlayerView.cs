@@ -21,7 +21,12 @@ namespace Queens.Views
         {
             statsView.Bind(playerViewModel.Stats);
             nameText.SetText(playerViewModel.Name);
-            playerViewModel.Career.Subscribe(next => careerText.SetText($"{next} meses en carrera"));
+            PlayerSystem.Instance.PlayerViewModel.Value.Career.Subscribe(SetCareerText);
+        }
+
+        private void SetCareerText(int value)
+        {
+            careerText.SetText($"{value} meses en carrera");
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using Queens.Managers;
+﻿using Queens.Managers;
 using Queens.Services;
-using Queens.Systems.CardFlow;
-using Queens.Systems.Events;
 using Queens.ViewModels;
 using UniRx;
 using UnityEngine;
@@ -28,7 +25,7 @@ namespace Queens.Systems
 
         private void Start()
         {
-            DeckSystem.Instance.CurrentCardViewModel.Value.CardEventObservable.Subscribe(OnCardFlowEventTriggered);
+            DeckSystem.Instance.CardEventObservable.Subscribe(OnCardFlowEventTriggered);
         }
 
         public void OnCardFlowEventTriggered(CardFlowEventArgs args)
@@ -41,13 +38,21 @@ namespace Queens.Systems
                     PlayerViewModel.Value.Stats.Health.Value = PlayerViewModel.Value.Stats.Health.Value + args.HealthDelta;
                     PlayerViewModel.Value.Stats.Money.Value = PlayerViewModel.Value.Stats.Money.Value + args.MoneyDelta;
                     PlayerViewModel.Value.Stats.Popularity.Value = PlayerViewModel.Value.Stats.Popularity.Value + args.PopularityDelta;
-                    PlayerViewModel.Value.Career.Value++;
+                    
+                    PlayerViewModel.Value.Career.Value = PlayerViewModel.Value.Career.Value + 1;
 
                     if (!PlayerViewModel.Value.Stats.AreStatsValid())
                     {
                         GameManager.Instance.OnPlayerLost();
                     }
-                    
+
+                    if (!string.IsNullOrEmpty(args.ActivatesCollection))
+                    {
+                        if (!PlayerViewModel.Value.ActiveCollections.Contains(args.ActivatesCollection))
+                        {
+                            PlayerViewModel.Value.ActiveCollections.Add(args.ActivatesCollection);
+                        }
+                    }
                     break;
             }
         }

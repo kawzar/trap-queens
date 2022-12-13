@@ -1,7 +1,6 @@
 using DG.Tweening;
 using Queens.Services;
 using Queens.Systems;
-using Queens.Systems.CardFlow;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,7 +65,7 @@ public class CardView : MonoBehaviour
    {
       if (_hasSwiped) return;
       _hasSwiped = true;
-      DeckSystem.Instance.CurrentCardViewModel.Value.CardPlayed(CardFlowEventEnum.YES);
+      DeckSystem.Instance.CardPlayed(CardFlowEventEnum.YES);
       UnsuscribeEvents();
       Destroy(gameObject);
    }
@@ -75,7 +74,7 @@ public class CardView : MonoBehaviour
    {
       if (_hasSwiped) return;
       _hasSwiped = true;
-      DeckSystem.Instance.CurrentCardViewModel.Value.CardPlayed(CardFlowEventEnum.NO);
+      DeckSystem.Instance.CardPlayed(CardFlowEventEnum.NO);
       UnsuscribeEvents();
       Destroy(gameObject);
    }

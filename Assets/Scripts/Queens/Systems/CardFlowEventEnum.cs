@@ -1,4 +1,4 @@
-﻿namespace Queens.Systems.CardFlow
+﻿namespace Queens.Systems
 {
     public enum CardFlowEventEnum
     {
@@ -16,5 +16,7 @@
         public int HealthDelta { get; set; }
         
         public string CardText { get; set; }
+        
+        public string ActivatesCollection { get; set; }
     }
 }
