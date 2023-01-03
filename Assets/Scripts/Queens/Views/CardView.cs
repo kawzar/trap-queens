@@ -17,10 +17,11 @@ public class CardView : MonoBehaviour
 
    private bool _isDragging;
    private bool _hasSwiped;
+   private Tween _tween;
 
   private void Start()
    {
-      transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration);
+      _tween = transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration);
       image.sprite = _appeareanceConfigService.GetCharacterSpriteForCurrentCard();
       InputManager.Instance.OnStartTouch += OnStartedTouch;
       InputManager.Instance.OnEndTouch += OnReleasedFinger;
@@ -67,6 +68,7 @@ public class CardView : MonoBehaviour
       _hasSwiped = true;
       DeckSystem.Instance.CardPlayed(CardFlowEventEnum.YES);
       UnsuscribeEvents();
+      _tween.Kill();
       Destroy(gameObject);
    }
 
@@ -76,6 +78,7 @@ public class CardView : MonoBehaviour
       _hasSwiped = true;
       DeckSystem.Instance.CardPlayed(CardFlowEventEnum.NO);
       UnsuscribeEvents();
+      _tween.Kill();
       Destroy(gameObject);
    }
    

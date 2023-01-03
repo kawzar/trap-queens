@@ -19,13 +19,16 @@ namespace Queens.Services
         private async UniTask LoadSavedCards()
         {
 #if UNITY_EDITOR
-            var path = Path.Combine(Application.streamingAssetsPath, FileName);
-            if (File.Exists(path))
+            await UniTask.RunOnThreadPool(() =>
             {
-                string[] lines = File.ReadAllLines(path);
-                savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, lines));
-            }
-            #else
+                var path = Path.Combine(Application.streamingAssetsPath, FileName);
+                if (File.Exists(path))
+                {
+                    string[] lines = File.ReadAllLines(path);
+                    savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, lines));
+                }
+            });
+#else
             string filePath = Path.Combine(Application.streamingAssetsPath, FileName);
             var fileText = await GetTextAsync(UnityWebRequest.Get(filePath));
             savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, fileText));

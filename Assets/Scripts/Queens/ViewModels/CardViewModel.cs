@@ -1,7 +1,5 @@
-using System;
 using Queens.Models;
 using Queens.Systems;
-using UniRx;
 
 namespace Queens.ViewModels
 {
