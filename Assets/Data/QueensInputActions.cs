@@ -24,76 +24,6 @@ public partial class @QueensInputActions : IInputActionCollection2, IDisposable
     ""name"": ""QueensInputActions"",
     ""maps"": [
         {
-            ""name"": ""Gameplay"",
-            ""id"": ""13fe8c15-26e7-4f60-a420-2676be0cc50b"",
-            ""actions"": [
-                {
-                    ""name"": ""PrimaryContact"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""4452b5e1-e98a-45f5-8f19-214563a62f1b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PrimaryPosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""fcbbf7da-cb0c-4df5-957f-e1a4e089c17b"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""51075bb4-8e95-42d9-a856-9e4600419e3e"",
-                    ""path"": ""<Touchscreen>/primaryTouch/press"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PrimaryContact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""24795a67-5f3c-456b-a9af-b04bfbfbea49"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PrimaryContact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a4eff495-dace-455f-b497-7384623e3dfe"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PrimaryPosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""983f75fc-4061-4ed5-ac3e-48b20f680b67"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PrimaryPosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""UI"",
             ""id"": ""37d8714b-72e6-484f-b5c2-3a1d2674be62"",
             ""actions"": [
@@ -612,10 +542,6 @@ public partial class @QueensInputActions : IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_PrimaryContact = m_Gameplay.FindAction("PrimaryContact", throwIfNotFound: true);
-        m_Gameplay_PrimaryPosition = m_Gameplay.FindAction("PrimaryPosition", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -683,47 +609,6 @@ public partial class @QueensInputActions : IInputActionCollection2, IDisposable
     {
         return asset.FindBinding(bindingMask, out action);
     }
-
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_PrimaryContact;
-    private readonly InputAction m_Gameplay_PrimaryPosition;
-    public struct GameplayActions
-    {
-        private @QueensInputActions m_Wrapper;
-        public GameplayActions(@QueensInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @PrimaryContact => m_Wrapper.m_Gameplay_PrimaryContact;
-        public InputAction @PrimaryPosition => m_Wrapper.m_Gameplay_PrimaryPosition;
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
-        public void SetCallbacks(IGameplayActions instance)
-        {
-            if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
-            {
-                @PrimaryContact.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryContact;
-                @PrimaryContact.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryContact;
-                @PrimaryContact.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryContact;
-                @PrimaryPosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryPosition;
-                @PrimaryPosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryPosition;
-                @PrimaryPosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryPosition;
-            }
-            m_Wrapper.m_GameplayActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @PrimaryContact.started += instance.OnPrimaryContact;
-                @PrimaryContact.performed += instance.OnPrimaryContact;
-                @PrimaryContact.canceled += instance.OnPrimaryContact;
-                @PrimaryPosition.started += instance.OnPrimaryPosition;
-                @PrimaryPosition.performed += instance.OnPrimaryPosition;
-                @PrimaryPosition.canceled += instance.OnPrimaryPosition;
-            }
-        }
-    }
-    public GameplayActions @Gameplay => new GameplayActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -829,11 +714,6 @@ public partial class @QueensInputActions : IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
-    public interface IGameplayActions
-    {
-        void OnPrimaryContact(InputAction.CallbackContext context);
-        void OnPrimaryPosition(InputAction.CallbackContext context);
-    }
     public interface IUIActions
     {
         void OnNavigate(InputAction.CallbackContext context);

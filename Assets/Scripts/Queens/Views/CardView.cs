@@ -10,58 +10,75 @@ public class CardView : MonoBehaviour
    [SerializeField] private Image image;
    [SerializeField] private float spawnAnimationEndValue = 255f;
    [SerializeField] private float spawnAnimationDuration = 1.25f;
-   [SerializeField] private float swipeThreshold = 50f;
-   [SerializeField] private float swipeVelocity = 15f;
+   [SerializeField] private float viewportHalfThreshold = 0.5f;
+   [SerializeField] private float viewportYesThreshold = 0.8f;
+   [SerializeField] private float viewportNoThreshold = 0.2f;
 
    private Vector3 _initialScale;
-
+   private RectTransform _rectTransform;
    private bool _isDragging;
    private bool _hasSwiped;
    private Tween _tween;
+   private float _initialPositionX;
+   private Canvas _canvas;
 
   private void Start()
    {
-      _tween = transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration);
-      image.sprite = _appeareanceConfigService.GetCharacterSpriteForCurrentCard();
-      InputManager.Instance.OnStartTouch += OnStartedTouch;
-      InputManager.Instance.OnEndTouch += OnReleasedFinger;
-   }
-
-   private void OnStartedTouch(Vector2 position, float time)
-   {
-      _isDragging = true;
-   }
-
-   private void OnReleasedFinger(Vector2 position, float time)
-   {
-      _isDragging = false;
-
-      if (_isDragging) return; // so we don't spawn events
+      _tween = transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration).OnComplete(() =>
+      {
+         InputManager.Instance.OnMovedToPosition += OnTouchPerformed;
+         InputManager.Instance.OnFingerReleased += OnReleasedFinger;
+      });
       
-      if (transform.localPosition.x >= swipeThreshold)
+      _initialPositionX = transform.position.x;
+      image.sprite = _appeareanceConfigService.GetCharacterSpriteForCurrentCard();
+      _canvas = GetComponentInParent<Canvas>();
+      _rectTransform = GetComponent<RectTransform>();
+   }
+
+   private void OnTouchPerformed(Vector3 position)
+   {
+      if (!IsOverMe(position)) return;
+      
+      _isDragging = true;
+      _tween.Kill();
+      transform.DOMoveX(position.x, 0.1f);
+   }
+
+   private bool IsOverMe(Vector3 position)
+   {
+      Vector2 localFingerPosition = _rectTransform.InverseTransformPoint(position);
+      if (_rectTransform.rect.Contains(localFingerPosition))
+      {
+         return true;
+      }
+
+      return false;
+   }
+
+   private void OnReleasedFinger(Vector3 position)
+   {
+      if (!IsOverMe(position)) return;
+      
+      _isDragging = false;
+      if (_isDragging) return; // so we don't spawn events
+
+      var primaryX = Camera.main.ScreenToViewportPoint(position).x;
+      if (primaryX > viewportYesThreshold && primaryX > viewportHalfThreshold)
       {
          OnSwipeRight();
       }
-      else if (transform.localPosition.x <= -swipeThreshold)
+      else if (primaryX < viewportNoThreshold && primaryX < viewportHalfThreshold)
       {
          OnSwipeLeft();
       }
       else
       {
-         transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
+         _tween.Kill();
+         _tween = transform.DOMoveX(_initialPositionX, 0.1f);
       }
    }
-
-   private void Update()
-   {
-      if (_isDragging)
-      {
-         var fingerPosition = InputManager.Instance.GetPrimaryPosition();
-         transform.localPosition = new Vector3(fingerPosition.x * swipeVelocity, transform.localPosition.y, transform.localPosition.z);
-      }
-   }
-
-
+ 
    private void OnSwipeRight()
    {
       if (_hasSwiped) return;
@@ -84,7 +101,7 @@ public class CardView : MonoBehaviour
    
    private void UnsuscribeEvents()
    {
-      InputManager.Instance.OnStartTouch -= OnStartedTouch;
-      InputManager.Instance.OnEndTouch -= OnReleasedFinger;
+      InputManager.Instance.OnMovedToPosition -= OnTouchPerformed;
+      InputManager.Instance.OnFingerReleased -= OnReleasedFinger;
    }
 }
