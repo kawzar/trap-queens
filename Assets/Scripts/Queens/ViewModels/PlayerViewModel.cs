@@ -9,6 +9,8 @@ namespace Queens.ViewModels
         public StatsViewModel Stats { get; set; }
         public IntReactiveProperty Career { get; set; }
         public List<string> ActiveCollections { get; set; }
+        
+        public bool HasPlayedTutorial { get; set; }
 
         public PlayerViewModel(PlayerModel model)
         {
@@ -16,6 +18,7 @@ namespace Queens.ViewModels
             Career = new IntReactiveProperty(model.career);
             ActiveCollections = model.active_collections ?? new List<string>();
             Name = model.name;
+            HasPlayedTutorial = model.has_played_tutorial;
         }
         
         public string Name { get; set; }

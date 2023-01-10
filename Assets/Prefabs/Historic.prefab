@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sarasa - 10 meses
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4ea17246e12bbd941a1c41593d76ab85, type: 2}
+  m_sharedMaterial: {fileID: -3306128397833389920, guid: 4ea17246e12bbd941a1c41593d76ab85, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

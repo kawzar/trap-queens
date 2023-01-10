@@ -14,16 +14,16 @@ namespace Queens.Systems
     public class DeckSystem : MonoBehaviour
     {
         [SerializeField] private CardFactory _cardFactory;
-        
+
         private List<CardModel> allCards;
         private List<int> usedCardIds = new List<int>();
         private Dictionary<string, List<CardModel>> cardsByCollection = new Dictionary<string, List<CardModel>>();
 
-        public IReactiveProperty<CardViewModel> CurrentCardViewModel= new ReactiveProperty<CardViewModel>();
-        
+        public IReactiveProperty<CardViewModel> CurrentCardViewModel = new ReactiveProperty<CardViewModel>();
+
         private Subject<CardFlowEventArgs> _cardEventsubject = new Subject<CardFlowEventArgs>();
         public IObservable<CardFlowEventArgs> CardEventObservable => _cardEventsubject.AsObservable();
-        
+
         public static DeckSystem Instance { get; set; }
 
         private async UniTaskVoid Awake()
@@ -32,7 +32,12 @@ namespace Queens.Systems
             {
                 Instance = this;
             }
-            
+
+            if (!PlayerSystem.Instance.PlayerViewModel.Value.HasPlayedTutorial)
+            {
+                PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Add("tutorial");
+            }
+
             allCards = await _cardFactory.GetSavedCards();
             CategorizeByCollection();
             CurrentCardViewModel.Value = GetNextCard();
@@ -41,10 +46,12 @@ namespace Queens.Systems
         private CardViewModel GetNextCard()
         {
             List<CardModel> enabledCards = new List<CardModel>();
+
             foreach (var key in cardsByCollection.Keys)
             {
-                if (PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Contains(key) 
-                    || string.IsNullOrEmpty(key))
+                if (PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Contains(key)
+                    || (string.IsNullOrEmpty(key) &&
+                        !PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Contains("tutorial")))
                 {
                     enabledCards.AddRange(cardsByCollection[key]);
                 }
@@ -55,20 +62,26 @@ namespace Queens.Systems
             {
                 if (usedCardIds.Contains(enabledCards[i].id) ||
                     enabledCards[i].level_lock > PlayerSystem.Instance.PlayerViewModel.Value.Career.Value)
+
                 {
                     enabledCards.RemoveAt(i);
                 }
             }
-            
-            if (!enabledCards.Any())
-            {
-                Debug.LogError("No more cards");
-                return null;
-            }
 
+            if (PlayerSystem.Instance.PlayerViewModel.Value.Career.Value > 3 &&
+                PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Contains("tutorial"))
+            {
+                PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Remove("tutorial");
+                PlayerSystem.Instance.PlayerViewModel.Value.HasPlayedTutorial = true;
+                Debug.Log("end of tutorial");
+                return GetNextCard();
+            }
+            
             int index = Random.Range(0, enabledCards.Count);
             usedCardIds.Add(enabledCards[index].id);
             return new CardViewModel(enabledCards[index]);
+            
+            return null;
         }
 
         private void CategorizeByCollection()
@@ -86,7 +99,7 @@ namespace Queens.Systems
                 }
             }
         }
-        
+
         public void CardPlayed(CardFlowEventEnum evt)
         {
             switch (evt)
@@ -98,7 +111,7 @@ namespace Queens.Systems
                     _cardEventsubject.OnNext(CurrentCardViewModel.Value.NoAnswerArgs);
                     break;
             }
-            
+
             CurrentCardViewModel.Value = GetNextCard();
         }
     }

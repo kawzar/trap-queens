@@ -28,18 +28,18 @@ namespace Queens.Services
                 savedModel = PlayerParserService.ParseJson(savedValue)[0];
                 if (!savedModel.status.IsValid())
                 {
-                    InitializeSavedModel();
+                    InitializeSavedModel(hasPlayedTutorial: true);
                 }
             }
             else
             {
-                InitializeSavedModel();
+                InitializeSavedModel(hasPlayedTutorial: false);
             }
 
             return savedModel;
         }
 
-        private void InitializeSavedModel()
+        private void InitializeSavedModel(bool hasPlayedTutorial)
         {
             savedModel = new PlayerModel();
             savedModel.status = new Status();
@@ -49,6 +49,7 @@ namespace Queens.Services
             savedModel.status.money = DefaultMoney;
             m_random = new Random();
             savedModel.name = _generator.Generate(m_random);
+            savedModel.has_played_tutorial = hasPlayedTutorial;
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Queens.Models;
 using UnityEngine;
@@ -28,11 +26,11 @@ namespace Queens.Services
                     savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, lines));
                 }
             });
+            
 #else
             string filePath = Path.Combine(Application.streamingAssetsPath, FileName);
             var fileText = await GetTextAsync(UnityWebRequest.Get(filePath));
             savedCards = CardParserService.ParseJson(string.Join(Environment.NewLine, fileText));
-
 #endif
         }
 
@@ -41,7 +39,6 @@ namespace Queens.Services
             await LoadSavedCards();
             return savedCards;
         }
-        
         async UniTask<string> GetTextAsync(UnityWebRequest req)
         {
             var op = await req.SendWebRequest();

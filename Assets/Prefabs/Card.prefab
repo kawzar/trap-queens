@@ -263,8 +263,8 @@ MonoBehaviour:
   spawnAnimationEndValue: 255
   spawnAnimationDuration: 1.25
   viewportHalfThreshold: 0.5
-  viewportYesThreshold: 0.75
-  viewportNoThreshold: 0.25
+  viewportYesThreshold: 0.6
+  viewportNoThreshold: 0.4
 --- !u!223 &3358745571446011643
 Canvas:
   m_ObjectHideFlags: 0
