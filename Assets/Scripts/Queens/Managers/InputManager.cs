@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
@@ -13,22 +14,36 @@ public class InputManager : MonoBehaviour
 
     public Action<Vector3> OnMovedToPosition;
     public Action<Vector3> OnFingerReleased;
-        
+
+    private bool isTouchSupportEnabled = false;
+    
     private void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
         }
-        
-        EnhancedTouchSupport.Enable();
+
+        if (UnityEngine.InputSystem.Touchscreen.current != null)
+        {
+            EnhancedTouchSupport.Enable();
+            isTouchSupportEnabled = true;
+        }
+        else
+        {
+            isTouchSupportEnabled = false;
+        }
     }
 
     private void Update()
     {
-        if (Touch.activeTouches.Any())
+        if (isTouchSupportEnabled && Touch.activeTouches.Any())
         {
             MoveCard(Touch.activeTouches[0]);
+        }
+        else
+        {
+            MoveCardMouseVersion(UnityEngine.InputSystem.Mouse.current.leftButton);
         }
     }
 
@@ -41,6 +56,18 @@ public class InputManager : MonoBehaviour
         else if (touch.phase == TouchPhase.Moved)
         {
             OnMovedToPosition?.Invoke(touch.screenPosition);
+        }
+    }
+
+    private void MoveCardMouseVersion(ButtonControl leftButton)
+    {
+        if (leftButton.wasReleasedThisFrame)
+        {
+            OnFingerReleased?.Invoke(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
+        }
+        else if(leftButton.isPressed)
+        {
+            OnMovedToPosition?.Invoke(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
         }
     }
 }

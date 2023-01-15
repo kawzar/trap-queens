@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0b05b57454fa2a6753625347fa099, type: 3}
   m_Name: known_rapper_character_config
   m_EditorClassIdentifier: 
-  Image: {fileID: 21300000, guid: 86a362fb508b8b849a33bf005f23b9a7, type: 3}
+  Image: {fileID: 21300000, guid: 343ddf25153a44041a116af281441df1, type: 3}
   CharacterName: known_mc

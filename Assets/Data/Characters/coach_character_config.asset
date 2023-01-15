@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0b05b57454fa2a6753625347fa099, type: 3}
   m_Name: coach_character_config
   m_EditorClassIdentifier: 
-  Image: {fileID: 21300000, guid: b6c529636c67d2847a46d6a72354e2a7, type: 3}
+  Image: {fileID: 21300000, guid: f97aabd3fec9d0a4dba372d9912e5d91, type: 3}
   CharacterName: coach
