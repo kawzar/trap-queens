@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 7bf46f0a9e9e67947a9173c982990c57
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Anitype Journal
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 401b7a14a9695c5428ea2ef725815a1f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

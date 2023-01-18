@@ -11,7 +11,7 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance { get; set; }
     [SerializeField] private HistoricDataFactory _historicDataFactory;
 
-    [SerializeField] private TextMeshProUGUI _historicPrefab;
+    [SerializeField] private GameObject _historicPrefab;
     [SerializeField] private Transform _historicListParent;
     private List<HistoricPlayerModel> _historicPlayerModels;
     private void Awake()
@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour
         foreach (var model in _historicPlayerModels)
         {
             var instantiated =Instantiate(_historicPrefab, _historicListParent);
-            instantiated.SetText($"{model.name} - {model.career}");
+            instantiated.GetComponentInChildren<TextMeshProUGUI>().SetText($"{model.name} - {model.career}");
         }
     }
     
