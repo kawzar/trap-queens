@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0b05b57454fa2a6753625347fa099, type: 3}
   m_Name: hypeman_character_config
   m_EditorClassIdentifier: 
-  Image: {fileID: 21300000, guid: 7f87f49dccc1f7549b75c475c5fc35f0, type: 3}
+  Image: {fileID: 21300000, guid: fa88e113b00a59c459189e844d42a272, type: 3}
   CharacterName: hypeman

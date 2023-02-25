@@ -22,10 +22,20 @@ namespace Queens.Managers
 
         public void OnPlay()
         {
-            
             SceneManager.LoadScene(1);
         }
+        
+        public void OnMenu()
+        {
+            SceneManager.LoadScene(0);
+        }
 
+
+        public void OnCredits()
+        {
+            SceneManager.LoadScene(3);
+        }
+        
         public void OnPlayerLost()
         {
                     _historicDataFactory.AddHistoricData(PlayerSystem.Instance.PlayerViewModel.Value);

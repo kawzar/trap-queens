@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0b05b57454fa2a6753625347fa099, type: 3}
   m_Name: she_character_config
   m_EditorClassIdentifier: 
-  Image: {fileID: 21300000, guid: 4abd600afb3c4aa49892121c74286dab, type: 3}
+  Image: {fileID: 21300000, guid: 1b1c6687cf9ce2a439f06b28a84f874a, type: 3}
   CharacterName: she
