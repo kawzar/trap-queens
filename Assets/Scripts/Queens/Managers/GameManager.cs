@@ -29,7 +29,7 @@ namespace Queens.Managers
         public void OnPlayerLost()
         {
                     _historicDataFactory.AddHistoricData(PlayerSystem.Instance.PlayerViewModel.Value);
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene(2);
         }
     }
 }
