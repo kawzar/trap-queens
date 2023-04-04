@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using Queens.Global.Constants;
+using Queens.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -37,6 +39,19 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        if (UnityEngine.InputSystem.Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            switch (SceneManager.Instance.CurrentScene)
+            {
+                case SceneConstants.PLAY:
+                case SceneConstants.CREDITS:
+                    SceneManager.Instance.LoadScene(SceneConstants.MENU);
+                    break;
+                case SceneConstants.MENU:
+                    Application.Quit();
+                    break;
+            }
+        }
         if (isTouchSupportEnabled && Touch.activeTouches.Any())
         {
             MoveCard(Touch.activeTouches[0]);

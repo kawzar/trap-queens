@@ -10,4 +10,12 @@
         public const int MAX_MONEY = 100;
         public const int MIN_HEALTH = 0;
     }
+
+    public static class SceneConstants
+    {
+        public const int MENU = 0;
+        public const int PLAY = 1;
+        public const int CREDITS = 3;
+        public const int LOST = 2;
+    }
 }

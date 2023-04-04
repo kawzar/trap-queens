@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using Queens.Global.Constants;
 using Queens.Managers;
 using Queens.Models;
 using Queens.Services;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -30,6 +30,6 @@ public class MenuManager : MonoBehaviour
     
     public void OnPlay()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.Instance.LoadScene(SceneConstants.PLAY);
     }
 }

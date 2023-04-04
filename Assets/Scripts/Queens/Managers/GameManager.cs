@@ -1,7 +1,7 @@
+using Queens.Global.Constants;
 using Queens.Services;
 using Queens.Systems;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Queens.Managers
 {
@@ -22,24 +22,24 @@ namespace Queens.Managers
 
         public void OnPlay()
         {
-            SceneManager.LoadScene(1);
+            SceneManager.Instance.LoadScene(SceneConstants.PLAY);
         }
         
         public void OnMenu()
         {
-            SceneManager.LoadScene(0);
+            SceneManager.Instance.LoadScene(SceneConstants.MENU);
         }
 
 
         public void OnCredits()
         {
-            SceneManager.LoadScene(3);
+            SceneManager.Instance.LoadScene(SceneConstants.CREDITS);
         }
-        
+
         public void OnPlayerLost()
         {
-                    _historicDataFactory.AddHistoricData(PlayerSystem.Instance.PlayerViewModel.Value);
-                    SceneManager.LoadScene(2);
+            _historicDataFactory.AddHistoricData(PlayerSystem.Instance.PlayerViewModel.Value);
+            SceneManager.Instance.LoadScene(SceneConstants.LOST);
         }
     }
 }
