@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _appeareanceConfigService: {fileID: 11400000, guid: 63f25d871e456f54e80b2fce99b1fb8b, type: 2}
   image: {fileID: 8858843952406352935}
-  spawnAnimationEndValue: 300
+  spawnAnimationEndValue: -225
   spawnAnimationDuration: 1.25
   viewportHalfThreshold: 0.5
   viewportYesThreshold: 0.6

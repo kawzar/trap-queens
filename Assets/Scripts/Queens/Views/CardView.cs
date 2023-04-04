@@ -24,7 +24,7 @@ public class CardView : MonoBehaviour
 
   private void Start()
    {
-      _tween = transform.DOMoveY(spawnAnimationEndValue, spawnAnimationDuration).OnComplete(() =>
+      _tween = transform.DOLocalMoveY(spawnAnimationEndValue, spawnAnimationDuration).OnComplete(() =>
       {
          InputManager.Instance.OnMovedToPosition += OnTouchPerformed;
          InputManager.Instance.OnFingerReleased += OnReleasedFinger;
@@ -42,7 +42,7 @@ public class CardView : MonoBehaviour
       
       _isDragging = true;
       _tween.Kill();
-      transform.DOMoveX(position.x, 0.1f);
+      _tween = transform.DOMoveX(position.x, 0.1f);
    }
 
    private bool IsOverMe(Vector3 position)

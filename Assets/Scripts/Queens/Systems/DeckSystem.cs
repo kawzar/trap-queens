@@ -80,8 +80,6 @@ namespace Queens.Systems
             int index = Random.Range(0, enabledCards.Count);
             usedCardIds.Add(enabledCards[index].id);
             return new CardViewModel(enabledCards[index]);
-            
-            return null;
         }
 
         private void CategorizeByCollection()
