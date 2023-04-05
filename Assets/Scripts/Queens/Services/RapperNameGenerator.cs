@@ -17,8 +17,8 @@ namespace Queens.Services
                     {
                         new Tuple<string, IEnumerable<PartDefinition>>("{0} {1}", new[]
                         {
-                            RapperNames.NamePrefix,
-                            RapperNames.NameSuffix,
+                            RapperNames.PrefijoNombre,
+                            RapperNames.SufijoNombre,
                         })
                     }
                 )
