@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0b05b57454fa2a6753625347fa099, type: 3}
   m_Name: crewman_character_config
   m_EditorClassIdentifier: 
-  Image: {fileID: 21300000, guid: ea8da7bd98048544683b4d447129206e, type: 3}
+  Image: {fileID: 21300000, guid: fbf84433a4217d240bdb33a328fcae01, type: 3}
   CharacterName: crewman
