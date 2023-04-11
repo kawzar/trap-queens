@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfab8fb4893179142b4ba8bcc1beb56b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPosition: 1550
+  endPosition: 1900
   time: 10
 --- !u!114 &1038066938
 MonoBehaviour:
