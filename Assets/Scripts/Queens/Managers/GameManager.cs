@@ -22,24 +22,24 @@ namespace Queens.Managers
 
         public void OnPlay()
         {
-            SceneManager.Instance.LoadScene(SceneConstants.PLAY);
+            _ = SceneManager.Instance.LoadScene(SceneConstants.PLAY);
         }
         
         public void OnMenu()
         {
-            SceneManager.Instance.LoadScene(SceneConstants.MENU);
+            _ = SceneManager.Instance.LoadScene(SceneConstants.MENU);
         }
 
 
         public void OnCredits()
         {
-            SceneManager.Instance.LoadScene(SceneConstants.CREDITS);
+            _ = SceneManager.Instance.LoadScene(SceneConstants.CREDITS);
         }
 
         public void OnPlayerLost()
         {
             _historicDataFactory.AddHistoricData(PlayerSystem.Instance.PlayerViewModel.Value);
-            SceneManager.Instance.LoadScene(SceneConstants.LOST);
+            _ = SceneManager.Instance.LoadScene(SceneConstants.LOST);
         }
     }
 }

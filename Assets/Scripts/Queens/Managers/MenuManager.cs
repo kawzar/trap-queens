@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Queens.Global.Constants;
 using Queens.Managers;
 using Queens.Models;
@@ -30,6 +31,6 @@ public class MenuManager : MonoBehaviour
     
     public void OnPlay()
     {
-        SceneManager.Instance.LoadScene(SceneConstants.PLAY);
+        _ = SceneManager.Instance.LoadScene(SceneConstants.PLAY);
     }
 }

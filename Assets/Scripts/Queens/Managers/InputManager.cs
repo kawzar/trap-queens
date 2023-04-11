@@ -45,7 +45,7 @@ public class InputManager : MonoBehaviour
             {
                 case SceneConstants.PLAY:
                 case SceneConstants.CREDITS:
-                    SceneManager.Instance.LoadScene(SceneConstants.MENU);
+                    _ = SceneManager.Instance.LoadScene(SceneConstants.MENU);
                     break;
                 case SceneConstants.MENU:
                     Application.Quit();
