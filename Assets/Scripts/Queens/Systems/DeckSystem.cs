@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using Queens.Models;
 using Queens.Services;
@@ -23,8 +22,9 @@ namespace Queens.Systems
 
         private Subject<CardFlowEventArgs> _cardEventsubject = new Subject<CardFlowEventArgs>();
         public IObservable<CardFlowEventArgs> CardEventObservable => _cardEventsubject.AsObservable();
-
         public static DeckSystem Instance { get; set; }
+        
+        private const int MAX_TUTORIAL_ROUNDS = 3;
 
         private async UniTaskVoid Awake()
         {
@@ -68,16 +68,20 @@ namespace Queens.Systems
                 }
             }
 
-            if (PlayerSystem.Instance.PlayerViewModel.Value.Career.Value > 3 &&
+            //Handle tutorial (Recursive call)
+            if (PlayerSystem.Instance.PlayerViewModel.Value.Career.Value > MAX_TUTORIAL_ROUNDS &&
                 PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Contains("tutorial"))
             {
                 PlayerSystem.Instance.PlayerViewModel.Value.ActiveCollections.Remove("tutorial");
                 PlayerSystem.Instance.PlayerViewModel.Value.HasPlayedTutorial = true;
-                Debug.Log("end of tutorial");
                 return GetNextCard();
             }
-            
-            int index = Random.Range(0, enabledCards.Count);
+
+            //Shuffle cards. Tutorial special case. 
+            int index = PlayerSystem.Instance.PlayerViewModel.Value.HasPlayedTutorial 
+                ? Random.Range(0, enabledCards.Count) 
+                : Mathf.Min(PlayerSystem.Instance.PlayerViewModel.Value.Career.Value, enabledCards.Count - 1);
+
             usedCardIds.Add(enabledCards[index].id);
             return new CardViewModel(enabledCards[index]);
         }
