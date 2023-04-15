@@ -21,6 +21,9 @@ namespace Queens.Managers
 
         public async UniTaskVoid LoadScene(int scene)
         {
+        #if UNITY_WEBGL
+            UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+        #else
             var asyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(scene);
             asyncOperation.allowSceneActivation = false;
             _loaderCanvas.gameObject.SetActive(true);
@@ -39,6 +42,7 @@ namespace Queens.Managers
             }
             
             await UniTask.DelayFrame(1);
+            #endif
         }
 
         public int CurrentScene => UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
