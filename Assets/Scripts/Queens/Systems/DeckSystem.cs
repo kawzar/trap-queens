@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using FMODUnity;
+using Queens.Managers;
 using Queens.Models;
 using Queens.Services;
 using Queens.ViewModels;
@@ -13,6 +15,7 @@ namespace Queens.Systems
     public class DeckSystem : MonoBehaviour
     {
         [SerializeField] private CardFactory _cardFactory;
+        [SerializeField] private EventReference swipeEventReference;
 
         private List<CardModel> allCards;
         private List<int> usedCardIds = new List<int>();
@@ -114,6 +117,7 @@ namespace Queens.Systems
                     break;
             }
 
+            AudioManager.Instance.PlayOneShot(swipeEventReference, transform.position);
             CurrentCardViewModel.Value = GetNextCard();
         }
     }
